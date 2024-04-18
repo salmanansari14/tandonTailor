@@ -1,0 +1,50 @@
+.dgg {
+    color: red;
+}
+
+h1 {
+    color: green;
+}
+
+.hed {
+    color: rgb(212, 54, 54);
+}
+
+thead {
+    background-color: red;
+}
+
+.noitems {
+    width: 64px;
+    display: block;
+    margin: 15px auto;
+}
+
+.suitContainer {
+    display: flex;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.aligner {
+    padding: 58px;
+    padding-right: 12px;
+    padding-left: 12px;
+    text-align: center;
+}
+.iconn{
+    color: red;
+    cursor: pointer;
+}
+.inpGrp{
+    display: flex;
+}
+.elseSpan{
+    display: block;
+    width: fit-content;
+    margin: 15px auto;
+}
+.btns{
+    display: flex;
+    justify-content: space-between;
+}
