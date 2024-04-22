@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import DateObject from "react-date-object";
 import DataLocal from './DataLocal';
 
+
 function Item() {
     const [suits, setSuits] = useState("")
     const [suitsOrder, setSuitsOrder] = useState("")
@@ -16,6 +17,7 @@ function Item() {
     const [pantsOrder, setPantsOrder] = useState("")
     const [waiscoat, setWaiscoat] = useState("")
     const [waiscoatOrder, setWaiscoatOrder] = useState("")
+
 
     const [showData, setShowData] = useState(false)
     let total = 0, qntDetails = []
@@ -95,7 +97,7 @@ function Item() {
     const AddData = (itemsDetails) => {
         itemsDetails.qntDetails = []
         const qntArray = {
-            date: "d",
+            date: Date.format(),
             order: itemsDetails.order,
             category: itemsDetails.category,
             qnt: itemsDetails.quantity,
@@ -106,7 +108,57 @@ function Item() {
         itemsDetails.qntDetails.push(qntArray)
         setProd(prod => [...prod, itemsDetails])
     }
-    const editt = (itemsDetails, k) => {
+    const addNewDataInExistingItem = (item, newValue, newOrderValue, newItemType) => {
+        qntDetails = []
+        const qntArray = {
+            date: Date.format(),
+            order: newOrderValue,
+            category: newItemType,
+            qnt: newValue,
+        }
+        let newProd = [];
+        for (let i = 0; i < prod.length; i++) {
+            if (prod[i].name === item.name) {
+                prod[i].qntDetails.push(qntArray)
+                let sum = 0;
+                for (let j = 0; j < prod[i].qntDetails.length; j++) {
+                    sum += Number(prod[i].qntDetails[j].qnt);
+                }
+                prod[i].totalPrice = sum * prod[i].price;
+                newProd[i] = prod[i]
+            }
+            else { newProd[i] = prod[i] }
+        }
+        setProd(newProd)
+    }
+    const editqntDetails = (item, qntIdx, newValue, newOrderValue, newItemType) => {
+        if(newValue==='' && newOrderValue===''){
+            alert("please enter a value")
+        }
+        else{
+
+            let newProd = [];
+            for (let i = 0; i < prod.length; i++) {
+                if (prod[i].name === item.name) {
+                newProd[i] = prod[i]
+                let s= newProd[i].qntDetails[qntIdx].qnt;
+                let t= newProd[i].qntDetails[qntIdx].order;
+                newProd[i].qntDetails[qntIdx].qnt = newValue!==''? Number(newValue):s;
+                newProd[i].qntDetails[qntIdx].order = newOrderValue !== ''? Number(newOrderValue): t;
+                newProd[i].qntDetails[qntIdx].category = newItemType;
+                console.log(newValue, newOrderValue, newItemType)
+                let sum = 0;
+                for (let j = 0; j < prod[i].qntDetails.length; j++) {
+                    sum += Number(newProd[i].qntDetails[j].qnt);
+                }
+                newProd[i].totalPrice = sum * newProd[i].price;
+            }
+            else { newProd[i] = prod[i] }
+        }
+        setProd(newProd)
+    }
+    }
+    const editt = (itemsDetails) => {
         itemsDetails.qntDetails = []
         const qntArray = {
             date: Date.format(),
@@ -127,7 +179,7 @@ function Item() {
             }
             else { newProd[i] = prod[i] }
         }
-        return newProd;
+        setProd(newProd)
     }
     const submit = () => {
         if (suits === '' && sadri === '' && shirts === '' && pants === '' && waiscoat === '') {
@@ -140,7 +192,8 @@ function Item() {
                         let a = 0;
                         for (let k = 0; k < prod.length; k++) {
                             if (prod[k].name === itemsDetails[i].name) {
-                                setProd(editt(itemsDetails[i], k))
+                                editt(itemsDetails[i], k)
+                                clearDataInput();
                                 a++;
                             }
                         }
@@ -157,22 +210,22 @@ function Item() {
         else { setShowData(!showData) }
     }
 
-    const delItemQnt = (items, indexOfqntDetails) => {
+    const delItemQnt = (itemsIndex, indexOfqntDetails) => {
         let DemoProd = [];
         for (let i = 0; i < prod.length; i++) {
-            if (prod[i].name === items.name) {
+            if (i === itemsIndex) {
+                prod[i].totalPrice -= prod[i].qntDetails[indexOfqntDetails].qnt * prod[i].price
                 prod[i].qntDetails.splice(indexOfqntDetails, 1);
                 DemoProd[i] = prod[i]
             } DemoProd[i] = prod[i];
         }
         setProd(DemoProd)
     }
-    const delItem = (items) => {
-        if (window.confirm(`Are you sure to delete ${items.name} ?`)) {
+    const delItem = (itemIdx) => {
+        if (window.confirm(`Are you sure to delete ${prod[itemIdx].name} ?`)) {
             setProd(prod.filter((e) => {
-                return (e !== items)
+                return (e !== prod[itemIdx])
             }))
-            if (prod.length === 1) { setShowData(!showData) }
         }
     }
     const clear = () => {
@@ -203,7 +256,7 @@ function Item() {
                         <option>coat/blazer</option>
                     </select>
                     <input style={{ width: "100px" }} value={suits} onChange={(e) => setSuits(e.target.value)} type="number" className="form-control" placeholder="Enter no. of suits" aria-label="Enter here" aria-describedby="addon-wrapping" />
-                    <input style={{ width: "100px" }} value={suitsOrder} onChange={(e) => setSuitsOrder(e.target.value)} type="number" className="form-control" placeholder="Order no. suits" aria-label="Enter here" aria-describedby="addon-wrapping" />
+                    <input style={{ width: "100px" }} value={suitsOrder} onChange={(e) => setSuitsOrder(e.target.value)} type="text" className="form-control" placeholder="Order no. suits" aria-label="Enter here" aria-describedby="addon-wrapping" />
                 </div>
                 <div className='input-group flex-nowrap my-2'>
                     <span className="input-group-text" id="addon-wrapping">Sadri</span>
@@ -243,8 +296,15 @@ function Item() {
             </div>
             {showData === true && prod.length !== 0 ? (
                 <div className='elseSpan'>
-                    <DataLocal prod={prod} total={total} showData={showData} delItem={delItem} delItemQnt={delItemQnt} />
+                    <DataLocal prod={prod}
+                        total={total}
+                        showData={showData}
+                        addNewDataInExistingItem={addNewDataInExistingItem}
+                        editqntDetails={editqntDetails}
+                        delItem={delItem}
+                        delItemQnt={delItemQnt} />
                 </div>
+
             ) : prod.length === 0 ? <span className='elseSpan' >Please add an items</span>
                 : <span className='elseSpan' >Click on preview to show the data</span>
             }

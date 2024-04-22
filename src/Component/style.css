@@ -33,8 +33,17 @@ thead {
     text-align: center;
 }
 .iconn{
-    color: red;
+    color: rgb(196, 2, 2);
     cursor: pointer;
+    font-size: 18px;
+}
+.editt{
+    color: rgb(0, 81, 105);
+    font-size: 17px;
+    cursor: pointer;
+}
+.qnticon{
+    margin: 4px 9px;
 }
 .inpGrp{
     display: flex;
@@ -47,4 +56,9 @@ thead {
 .btns{
     display: flex;
     justify-content: space-between;
+}
+.dailogStyle{
+    margin: "40px";
+     width: "400px";
+     height: "200px"
 }
