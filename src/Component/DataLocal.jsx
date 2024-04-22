@@ -5,8 +5,8 @@ import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
 import { MdOutlineAddToPhotos, MdOutlineModeEdit } from "react-icons/md";
 import { RiDeleteBinLine, RiFileAddLine } from "react-icons/ri";
 import { Dialog } from '@mui/material';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/CloseIcon';
+// import IconButton from '@material-ui/core/IconButton';
+// import CloseIcon from '@material-ui/icons/CloseIcon';
 
 
 function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delItem, delItemQnt }) {
@@ -38,14 +38,15 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
         setNewOrderValue('')
         setNewItemType('Shawl collar')
     }
-    const editqntValue = (item, qntIdx)=>{
+    const editqntValue = (item, qntIdx) => {
         setItemEdit(item)
         setQntEditIdx(qntIdx)
         setEditToggle(!editToggle)
 
     }
     const editqnt = (item, qntIdx, newValue, newOrderValue, newItemType) => {
-        if (newValue === '' && newOrderValue === '') {
+        console.log(item.qntDetails[qntIdx].category===newItemType)
+        if (newValue === '' && newOrderValue === '' && item.qntDetails[qntIdx].category===newItemType) {
             alert("please add a value")
             setEditToggle(!editToggle)
             return
@@ -69,7 +70,7 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
     return (
         <>
             <div className="tablecontainer" id="dd">
-                <table id="my-table" className="my-10 table table-striped">
+                <table id="my-table" className="my-10 table table-striped table-bordered">
                     <thead className="table-bordered">
                         <tr className="table-dark">
                             <th className="text-center">ITEMS</th>
@@ -87,7 +88,7 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
                                     <tr className="" style={{ display: "inline" }}>
                                         <div style={{ border: "0.5px solid rgb(222, 224, 224)" }}>
                                             <span style={{ margin: "10px 25px" }}>
-                                                Total = {quntities[itemIdx]}
+                                                {quntities[itemIdx]}
                                             </span>
                                             {
                                                 showDetails === true ? (
@@ -95,21 +96,29 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
                                                 ) :
                                                     <IoIosArrowDown onClick={() => { setShowDetails(!showDetails) }} />
                                             }
-                                            <span className="qnticon">
-                                                <RiFileAddLine className="" onClick={() => { setQntdlgValue(item) }} />
-                                            </span>
+                                            {
+                                                showDetails === true ? (
+                                                    <span className="qnticon">
+                                                        <RiFileAddLine style={{ margin: '7px 18px' }} onClick={() => { setQntdlgValue(item) }} />
+                                                    </span>
+                                                ) : null
+                                            }
                                         </div>
                                     </tr>
+                                    {
+                                        showDetails === true ? (
+                                            <tr className=" table-active table-bordered text-center">
+                                                <th>Date</th>
+                                                <th>Order N.</th>
+                                                {item.name === "Suit" || item.name === "Sadri" ?
+                                                    (<th>Types</th>) :
+                                                    null}
+                                                <th>QNT</th>
+                                                <th>-</th>
+                                            </tr>
+                                        ) : null
+                                    }
                                     {showDetails === true ? (
-                                        <tr className=" table-active table-bordered text-center">
-                                            <th>Date</th>
-                                            <th>Order N.</th>
-                                            {item.name === "Suit" || item.name === "Sadri" ?
-                                                (<th>Types</th>) :
-                                                null}
-                                            <th>QNT</th>
-                                            <th>-</th>
-                                        </tr>,
                                         item.qntDetails && item.qntDetails.map((qntItem, qntIdx) => (
                                             <tr style={{ margin: "10px" }} className="text-center">
                                                 <td>{qntItem.date}</td>
@@ -176,11 +185,14 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
                 </table>
 
                 <Dialog open={addToggle}
-                    // onClose={() => { setAddToggle(!addToggle) }}
+                    onClose={() => { setAddToggle(!addToggle) }}
                 >
-                    <IconButton onClick={onclose}>
+                    <button >
+                        close
+                    </button>
+                    {/* <IconButton onClick={onclose}>
                         <CloseIcon/>
-                    </IconButton>
+                    </IconButton> */}
                     <div style={{ margin: "40px", width: "400px", height: "200px" }}>
                         <h4>Add a new value of {item.name}</h4>
                         <div className="input-group flex-nowrap my-2 "  >
@@ -203,7 +215,7 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
                                 ) : null
                             }
                             <input style={{ width: "100px" }} type="number" value={newValue} onChange={(e) => setNewValue(e.target.value)} className="form-control" placeholder="Enter no." aria-label="First Name" aria-describedby="addon-wrapping" />
-                            <input style={{ width: "100px" }} type="number" value={newOrderValue} onChange={(e) => setNewOrderValue(e.target.value)} className="form-control" placeholder="Order no. shirts" aria-label="Last Name" aria-describedby="addon-wrapping" />
+                            <input style={{ width: "100px" }} type="text" value={newOrderValue} onChange={(e) => setNewOrderValue(e.target.value)} className="form-control" placeholder="Order no. shirts" aria-label="Last Name" aria-describedby="addon-wrapping" />
                         </div>
                         <div style={{ width: 'fit-content', display: 'block', margin: "60px auto" }}>
                             <button className="btn btn-success" onClick={() => { addQntDetails(item, newValue, newOrderValue, newItemType) }}>Submit</button>
@@ -235,7 +247,7 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
                                 ) : null
                             }
                             <input style={{ width: "100px" }} type="number" value={newValue} onChange={(e) => setNewValue(e.target.value)} className="form-control" placeholder="Enter no." aria-label="First Name" aria-describedby="addon-wrapping" />
-                            <input style={{ width: "100px" }} type="number" value={newOrderValue} onChange={(e) => setNewOrderValue(e.target.value)} className="form-control" placeholder="Order no. shirts" aria-label="Last Name" aria-describedby="addon-wrapping" />
+                            <input style={{ width: "100px" }} type="text" value={newOrderValue} onChange={(e) => setNewOrderValue(e.target.value)} className="form-control" placeholder="Order no. shirts" aria-label="Last Name" aria-describedby="addon-wrapping" />
                         </div>
                         <div style={{ width: 'fit-content', display: 'block', margin: "60px auto" }}>
                             <button className="btn btn-success"

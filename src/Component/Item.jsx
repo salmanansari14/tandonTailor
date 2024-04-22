@@ -132,31 +132,32 @@ function Item() {
         setProd(newProd)
     }
     const editqntDetails = (item, qntIdx, newValue, newOrderValue, newItemType) => {
-        if(newValue==='' && newOrderValue===''){
+        if (newValue === '' && newOrderValue === '') {
             alert("please enter a value")
         }
-        else{
+        else {
 
             let newProd = [];
             for (let i = 0; i < prod.length; i++) {
                 if (prod[i].name === item.name) {
-                newProd[i] = prod[i]
-                let s= newProd[i].qntDetails[qntIdx].qnt;
-                let t= newProd[i].qntDetails[qntIdx].order;
-                newProd[i].qntDetails[qntIdx].qnt = newValue!==''? Number(newValue):s;
-                newProd[i].qntDetails[qntIdx].order = newOrderValue !== ''? Number(newOrderValue): t;
-                newProd[i].qntDetails[qntIdx].category = newItemType;
-                console.log(newValue, newOrderValue, newItemType)
-                let sum = 0;
-                for (let j = 0; j < prod[i].qntDetails.length; j++) {
-                    sum += Number(newProd[i].qntDetails[j].qnt);
+                    newProd[i] = prod[i]
+                    let s = newProd[i].qntDetails[qntIdx].qnt;
+                    let t = newProd[i].qntDetails[qntIdx].order;
+                    let u = newProd[i].qntDetails[qntIdx].category;
+                    newProd[i].qntDetails[qntIdx].qnt = newValue !== '' ? Number(newValue) : s;
+                    newProd[i].qntDetails[qntIdx].order = newOrderValue !== '' ? newOrderValue : t;
+                    newProd[i].qntDetails[qntIdx].category = newItemType === newProd[i].qntDetails[qntIdx].category ? u : newItemType;
+                    console.log(newValue, newOrderValue, newItemType)
+                    let sum = 0;
+                    for (let j = 0; j < prod[i].qntDetails.length; j++) {
+                        sum += Number(newProd[i].qntDetails[j].qnt);
+                    }
+                    newProd[i].totalPrice = sum * newProd[i].price;
                 }
-                newProd[i].totalPrice = sum * newProd[i].price;
+                else { newProd[i] = prod[i] }
             }
-            else { newProd[i] = prod[i] }
+            setProd(newProd)
         }
-        setProd(newProd)
-    }
     }
     const editt = (itemsDetails) => {
         itemsDetails.qntDetails = []
@@ -255,7 +256,7 @@ function Item() {
                         <option>Three piece</option>
                         <option>coat/blazer</option>
                     </select>
-                    <input style={{ width: "100px" }} value={suits} onChange={(e) => setSuits(e.target.value)} type="number" className="form-control" placeholder="Enter no. of suits" aria-label="Enter here" aria-describedby="addon-wrapping" />
+                    <input style={{ width: "100px" }} value={suits} onChange={(e) => setSuits(e.target.value)} type="number" className="form-control" placeholder=" no. of suits" aria-label="Enter here" aria-describedby="addon-wrapping" />
                     <input style={{ width: "100px" }} value={suitsOrder} onChange={(e) => setSuitsOrder(e.target.value)} type="text" className="form-control" placeholder="Order no. suits" aria-label="Enter here" aria-describedby="addon-wrapping" />
                 </div>
                 <div className='input-group flex-nowrap my-2'>
@@ -264,22 +265,22 @@ function Item() {
                         <option>Shawl collar</option>
                         <option>noraml collar</option>
                     </select>
-                    <input style={{ width: "100px" }} value={sadri} onChange={(e) => setSadri(e.target.value)} type="number" className="form-control" placeholder="Enter no. of sadri" aria-label="Enter here" aria-describedby="addon-wrapping" />
+                    <input style={{ width: "100px" }} value={sadri} onChange={(e) => setSadri(e.target.value)} type="number" className="form-control" placeholder="no. of sadri" aria-label="Enter here" aria-describedby="addon-wrapping" />
                     <input style={{ width: "100px" }} value={sadriOrder} onChange={(e) => setSadriOrder(e.target.value)} type="number" className="form-control" placeholder="Order no. sadri" aria-label="Enter here" aria-describedby="addon-wrapping" />
                 </div>
                 <div className="input-group flex-nowrap my-2 " >
                     <span className="input-group-text" id="addon-wrapping"> Shirts</span>
-                    <input style={{ width: "100px" }} value={shirts} onChange={(e) => setShirts(e.target.value)} type="number" className="form-control" placeholder="Enter no. of shirts" aria-label="First Name" aria-describedby="addon-wrapping" />
+                    <input style={{ width: "100px" }} value={shirts} onChange={(e) => setShirts(e.target.value)} type="number" className="form-control" placeholder="no. of shirts" aria-label="First Name" aria-describedby="addon-wrapping" />
                     <input style={{ width: "100px" }} value={shirtsOrder} onChange={(e) => setShirtsOrder(e.target.value)} type="number" className="form-control" placeholder="Order no. shirts" aria-label="Last Name" aria-describedby="addon-wrapping" />
                 </div>
                 <div className="input-group flex-nowrap my-2">
                     <span className="input-group-text" id="addon-wrapping">Pants</span>
-                    <input style={{ width: "100px" }} value={pants} onChange={(e) => setPants(e.target.value)} type="number" className="form-control" placeholder="Enter no. of pants" aria-label="Enter here" aria-describedby="addon-wrapping" />
+                    <input style={{ width: "100px" }} value={pants} onChange={(e) => setPants(e.target.value)} type="number" className="form-control" placeholder="no. of pants" aria-label="Enter here" aria-describedby="addon-wrapping" />
                     <input style={{ width: "100px" }} value={pantsOrder} onChange={(e) => setPantsOrder(e.target.value)} type="number" className="form-control" placeholder="Order no.pants" aria-label="Enter here" aria-describedby="addon-wrapping" />
                 </div>
                 <div className="input-group flex-nowrap my-2">
                     <span className="input-group-text" id="addon-wrapping">waiscoats</span>
-                    <input style={{ width: "100px" }} value={waiscoat} onChange={(e) => setWaiscoat(e.target.value)} type="number" className="form-control" placeholder="Enter no. of waiscoat" aria-label="Enter here" aria-describedby="addon-wrapping" />
+                    <input style={{ width: "100px" }} value={waiscoat} onChange={(e) => setWaiscoat(e.target.value)} type="number" className="form-control" placeholder="no. of waiscoat" aria-label="Enter here" aria-describedby="addon-wrapping" />
                     <input style={{ width: "100px" }} value={waiscoatOrder} onChange={(e) => setWaiscoatOrder(e.target.value)} type="number" className="form-control" placeholder="Order no. waiscoat" aria-label="Enter here" aria-describedby="addon-wrapping" />
                 </div>
                 <div className='btns'>
