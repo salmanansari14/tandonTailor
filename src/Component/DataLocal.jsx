@@ -1,15 +1,20 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useState } from "react";
-import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
-import { MdOutlineAddToPhotos, MdOutlineModeEdit } from "react-icons/md";
-import { RiDeleteBinLine, RiFileAddLine } from "react-icons/ri";
+import { IoIosArrowBack, IoIosArrowDown, IoMdClose } from "react-icons/io";
+import { MdAdd } from "react-icons/md";
+import { RiDeleteBinLine } from "react-icons/ri";
 import { Dialog } from '@mui/material';
-// import IconButton from '@material-ui/core/IconButton';
-// import CloseIcon from '@material-ui/icons/CloseIcon';
+import QntDetailsInfo from "./QntDetailsIinfo";
 
-
-function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delItem, delItemQnt }) {
+function DataLocal({ prod,
+    total,
+    editqntDetails,
+    addNewDataInExistingItem,
+    delItem,
+    delItemQnt,
+    valueProd,
+    deleteAmount }) {
 
     const [showDetails, setShowDetails] = useState(false)
     const [addToggle, setAddToggle] = useState(false)
@@ -45,8 +50,8 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
 
     }
     const editqnt = (item, qntIdx, newValue, newOrderValue, newItemType) => {
-        console.log(item.qntDetails[qntIdx].category===newItemType)
-        if (newValue === '' && newOrderValue === '' && item.qntDetails[qntIdx].category===newItemType) {
+        console.log(item.qntDetails[qntIdx].category === newItemType)
+        if (newValue === '' && newOrderValue === '' && item.qntDetails[qntIdx].category === newItemType) {
             alert("please add a value")
             setEditToggle(!editToggle)
             return
@@ -66,7 +71,25 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
         }
         quntities[i] = a;
     }
+    let MilaTotal = Number()
+    for (let i = 0; i < valueProd.length; i++) {
+        MilaTotal = Number(MilaTotal + valueProd[i]);
+    }
 
+    const closeDialog = (a) => {
+        if (a === 'addtoggle') {
+            setAddToggle(!addToggle)
+        }
+        else {
+            setEditToggle(!editToggle)
+        }
+    }
+    const  [itemdetails, setItemDetails]=useState()
+    const showItemDetails = (itemIdx) => {
+        setItemDetails(itemIdx)
+        setShowDetails(!showDetails)
+        console.log(showDetails)
+    }
     return (
         <>
             <div className="tablecontainer" id="dd">
@@ -82,72 +105,83 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
                     </thead>
                     <tbody>
                         {prod && prod.map((item, itemIdx) => (
-                            <tr className="table table-bordered">
+                            <tr className="table-bordered">
                                 <td className="aligner" >{item.name}</td>
                                 <td className="text-center ">
-                                    <tr className="" style={{ display: "inline" }}>
+                                    <tr style={{ display: "inline" }}>
                                         <div style={{ border: "0.5px solid rgb(222, 224, 224)" }}>
                                             <span style={{ margin: "10px 25px" }}>
                                                 {quntities[itemIdx]}
                                             </span>
                                             {
-                                                showDetails === true ? (
-                                                    <IoIosArrowBack onClick={() => { setShowDetails(!showDetails) }} />
+                                                showDetails === true &&itemIdx===itemdetails ? (
+                                                    <IoIosArrowBack onClick={() => { setItemDetails('e') }} />
                                                 ) :
-                                                    <IoIosArrowDown onClick={() => { setShowDetails(!showDetails) }} />
+                                                    <IoIosArrowDown onClick={() => { showItemDetails(itemIdx) }} />
                                             }
                                             {
-                                                showDetails === true ? (
-                                                    <span className="qnticon">
-                                                        <RiFileAddLine style={{ margin: '7px 18px' }} onClick={() => { setQntdlgValue(item) }} />
+                                                showDetails === true && itemIdx===itemdetails ? (
+                                                    <span className="qnticon addicon">
+                                                        <MdAdd style={{ margin: '7px 18px' }} onClick={() => { setQntdlgValue(item) }} />
                                                     </span>
                                                 ) : null
                                             }
                                         </div>
                                     </tr>
-                                    {
-                                        showDetails === true ? (
-                                            <tr className=" table-active table-bordered text-center">
-                                                <th>Date</th>
-                                                <th>Order N.</th>
-                                                {item.name === "Suit" || item.name === "Sadri" ?
-                                                    (<th>Types</th>) :
-                                                    null}
-                                                <th>QNT</th>
-                                                <th>-</th>
-                                            </tr>
-                                        ) : null
-                                    }
+                                    {showDetails === true && itemdetails===itemIdx ? (
+                                        <tr className=" table-active table-bordered text-center">
+                                            <th>Order</th>
+                                            <th>Date</th>
+                                            {item.name === "Suit" || item.name === "Sadri" ?
+                                                (<th>Types</th>) :
+                                                null}
+                                            <th>QNT</th>
+                                            <th></th>
+                                        </tr>
+                                    ) : null}
                                     {showDetails === true ? (
                                         item.qntDetails && item.qntDetails.map((qntItem, qntIdx) => (
-                                            <tr style={{ margin: "10px" }} className="text-center">
-                                                <td>{qntItem.date}</td>
-                                                {qntItem.order !== "" ?
-                                                    (<td>{qntItem.order}</td>) :
-                                                    <td>-</td>}
-                                                {item.name === "Suit" || item.name === "Sadri" ?
-                                                    (<td>{qntItem.category}</td>) :
-                                                    null}
-                                                <td>{qntItem.qnt}</td>
-                                                <td>
-                                                    <span className="qnticon">
-                                                        <MdOutlineModeEdit className="editt" onClick={() => { editqntValue(item, qntIdx) }} />
-                                                    </span>
-
-                                                    <span className="qnticon">
-                                                        <RiDeleteBinLine className="iconn" onClick={() => { delItemQnt(itemIdx, qntIdx) }} />
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            // ):null
+                                            // <tr className="text-center">
+                                            //     <td>{qntItem.date}</td>
+                                            //     {qntItem.order !== "" ?
+                                            //         (<td>{qntItem.order}</td>) :
+                                            //         <td>-</td>}
+                                            //     {item.name === "Suit" || item.name === "Sadri" ?
+                                            //         (<td>{qntItem.category}</td>) :
+                                            //         null}
+                                            //     <td>{qntItem.qnt}</td>
+                                            //     <td>
+                                            //         <span className="qnticon">
+                                            //             <MdOutlineModeEdit className="editt" onClick={() => { editqntValue(item, qntIdx) }} />
+                                            //         </span>
+                                            //         <span className="qnticon">
+                                            //             <RiDeleteBinLine className="iconn" onClick={() => { delItemQnt(itemIdx, qntIdx) }} />
+                                            //         </span>
+                                            //     </td>
+                                            // </tr>
+                                                <QntDetailsInfo
+                                                    qntItemDate={qntItem.date}
+                                                    qntItemOrder={qntItem.order}
+                                                    qntItemCategory={qntItem.category}
+                                                    qntItemQnt={qntItem.qnt}
+                                                    itemName={item.name}
+                                                    itemIdx={itemIdx}
+                                                    itemdetails={itemdetails}
+                                                    qntIdx={qntIdx}
+                                                    item={item}
+                                                    delItemQnt={delItemQnt}
+                                                    editqntValue={editqntValue}
+                                                />
                                         ))
                                     ) : null
                                     }
                                 </td>
                                 <td>{item.price}</td>
                                 <td className="text-center">{item.totalPrice}</td>
-                                <td>
-                                    <RiDeleteBinLine style={{ color: "red" }} className="iconn" onClick={() => { delItem(itemIdx) }} />
+                                <td className="text-center">
+                                    <span className="iconn">
+                                        <RiDeleteBinLine onClick={() => { delItem(itemIdx) }} />
+                                    </span>
                                 </td>
                             </tr>
                         ))
@@ -156,43 +190,63 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{total}=Total</td>
+                            <td>Total={total}</td>
                             <td></td>
                         </tr>
-                        <tr className="text-center">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td className="text-center">{total}=Advance</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{total}=</td>
-                            <td></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{total}=Due</td>
-                            <td></td>
-                        </tr>
+                        {
+                            valueProd !== 0 ? (
+                                <tr className="text-center">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className="text-center">
+                                        <th className="table-bordered">
+                                            <div style={{ border: "0.5px solid rgb(222, 224, 224)" }}>
+                                                <span style={{ margin: "10px 25px" }}>
+                                                    {MilaTotal}
+                                                </span>
+                                                {
+                                                    showDetails === true ? (
+                                                        <IoIosArrowBack onClick={() => { setShowDetails(!showDetails) }} />
+                                                    ) :
+                                                        <IoIosArrowDown onClick={() => { setShowDetails(!showDetails) }} />
+                                                }
+                                            </div>
+                                            <td>y</td>
+                                            <td>55</td>
+                                        </th>
+                                        {valueProd && valueProd.map((amount) => (
+                                            <tr className="table-bordered">
+                                                <td>Mila={amount}</td>
+                                            </tr>
+                                        ))}
+                                    </td>
+                                    <td>
+                                        <span className="qnticon">
+                                            <RiDeleteBinLine onClick={deleteAmount} className="iconn" />
+                                        </span>
+                                    </td>
+                                </tr>
+                            ) : null
+                        }
+                        {
+                            valueProd !== 0 ? (
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Due={total - MilaTotal}</td>
+                                    <td></td>
+                                </tr>
+                            ) : null
+                        }
                     </tbody>
                 </table>
 
                 <Dialog open={addToggle}
                     onClose={() => { setAddToggle(!addToggle) }}
                 >
-                    <button >
-                        close
-                    </button>
-                    {/* <IconButton onClick={onclose}>
-                        <CloseIcon/>
-                    </IconButton> */}
+                    <IoMdClose onClick={() => { closeDialog("addtoggle") }} style={{ width: 'fit-content', fontSize: '30px' }} />
                     <div style={{ margin: "40px", width: "400px", height: "200px" }}>
                         <h4>Add a new value of {item.name}</h4>
                         <div className="input-group flex-nowrap my-2 "  >
@@ -223,8 +277,9 @@ function DataLocal({ prod, total, editqntDetails, addNewDataInExistingItem, delI
                     </div>
                 </Dialog>
                 <Dialog open={editToggle}
-                    onClose={() => { setEditToggle(!editToggle) }}
+                    onClose={closeDialog}
                 >
+                    <IoMdClose onClick={closeDialog} style={{ width: 'fit-content', fontSize: '30px' }} />
                     <div style={{ margin: "40px", width: "400px", height: "200px" }}>
                         <h4>Add a new value of {itemEdit.name}</h4>
                         <div className="input-group flex-nowrap my-2 "  >

@@ -1,3 +1,52 @@
+.content {
+    width: fit-content;
+    margin: 20px auto;
+}
+.nave{
+    width: 70%;
+    margin: 10px auto;
+    text-align: center;
+    border-radius: 25px;
+}
+.navcontent{
+    width: fit-content;
+    display: block;
+    margin: 0px auto;
+    color: white;
+}
+.navli{
+    padding: 8px;
+    margin: 0px 7px;
+    display: flex;
+}
+.liItem{
+    margin: 0px 3px;
+    padding: 6px 0px;
+}
+.selct{
+    width: 38px;
+    /* height: 30px;  */
+    /* background-color: rgb(37, 37, 37); */
+    /* color: white; */
+}
+.selct option{
+    color: white;
+}
+.navSpan{
+    margin: 7px;
+}
+.select-item div{
+    margin-right: 35px;
+}
+.select-item{
+    /* background-color: rgb(36, 36, 36);
+    color: wheat; */
+    border: 1px solid black;
+    border-radius: 30px;
+    width: fit-content;
+    margin: 5px auto;
+    padding: 10px 35px;
+}
 .dgg {
     color: red;
 }
@@ -32,33 +81,45 @@ thead {
     padding-left: 12px;
     text-align: center;
 }
-.iconn{
-    color: rgb(172, 4, 4);
+
+.iconn {
     cursor: pointer;
-    font-size: 18px;
+    font-size: 17px;
+    margin: 0;
+    color: rgb(172, 4, 4);
+    padding: 0;
 }
-.editt{
+
+.editt {
     color: rgb(0, 81, 105);
     font-size: 17px;
     cursor: pointer;
 }
-.qnticon{
+
+.qnticon {
     margin: 4px 9px;
 }
-.inpGrp{
+.addicon{
+    border-radius: 35px;
+    background-color: rgb(184, 253, 253);
+}
+.inpGrp {
     display: flex;
 }
-.elseSpan{
+
+.elseSpan {
     display: block;
     width: fit-content;
     margin: 15px auto;
 }
-.btns{
+
+.btns {
     display: flex;
     justify-content: space-between;
 }
-.dailogStyle{
+
+.dailogStyle {
     margin: "40px";
-     width: "400px";
-     height: "200px"
+    width: "400px";
+    height: "200px"
 }
