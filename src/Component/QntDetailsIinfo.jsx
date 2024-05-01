@@ -19,8 +19,8 @@ function QntDetailsInfo({ delItemQnt,
                     {qntItemOrder !== "" ?
                         (<td>{qntItemOrder}</td>) :
                         <td>-</td>}
-                        <td>{qntItemDate}</td>
-                    {itemName === "Suit" || itemName === "Sadri" ?
+                    <td>{qntItemDate}</td>
+                    {itemName === "Suit" || itemName === "Sadri" || itemName === "Coat" ?
                         (<td>{qntItemCategory}</td>) :
                         null}
                     <td>{qntItemQnt}</td>
@@ -34,7 +34,6 @@ function QntDetailsInfo({ delItemQnt,
                     </td>
                 </tr>
             ) : null}
-
         </>
     )
 }

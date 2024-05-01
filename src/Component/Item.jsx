@@ -4,45 +4,17 @@ import DateObject from "react-date-object";
 import DataLocal from './DataLocal';
 
 function Item() {
-    const [suits, setSuits] = useState("1")
-    const [suitsOrder, setSuitsOrder] = useState("")
-    const [suitName, setSuitName] = useState("S B")
-    const [coat, setCoat] = useState("1")
-    const [coatOrder, setCoatOrder] = useState("")
-    const [coatName, setCoatName] = useState("S B")
-    const [sadri, setSadri] = useState("1")
-    const [sadriOrder, setSadriOrder] = useState("")
-    const [sadriName, setSadriName] = useState("Shawl collar")
-    const [shirts, setShirts] = useState("1")
-    const [shirtsOrder, setShirtsOrder] = useState("")
-    const [pants, setPants] = useState("1")
-    const [pantsOrder, setPantsOrder] = useState("")
-    const [waiscoat, setWaiscoat] = useState("1")
-    const [waiscoatOrder, setWaiscoatOrder] = useState("")
-    const [mila, setMila] = useState('')
 
-    const [value, setValue] = useState("")
     const [inputValue, setInputValue] = useState('')
     const [orderValue, setOrderValue] = useState('')
     const [categoryValue, setCategoryValue] = useState('')
+
+    const [value, setValue] = useState("")
+    const [mila, setMila] = useState('')
     const [aler, setAler] = useState(0)
-
     const [showData, setShowData] = useState(false)
-    let total = 0, qntDetails = []
-    let Date = new DateObject();
 
-    const [valueProd, setValueProd] = useState(
-        localStorage.getItem('amounts') === null ?
-            [] :
-            JSON.parse(localStorage.getItem('amounts'))
-    )
-    useEffect(() => {
-        localStorage.setItem("amounts", JSON.stringify(valueProd));
-    })
-    function deleteAmount() {
-        localStorage.removeItem('amounts');
-        setValueProd(0)
-    }
+    let total = 0, qntDetails = [], Date = new DateObject();
 
     const [prod, setProd] = useState(
         localStorage.getItem('item') === null ? [] :
@@ -52,80 +24,90 @@ function Item() {
             total += prod[i].totalPrice;
         }
     }
-    const itemsDetails = [
+    const [valueProd, setValueProd] = useState(
+        localStorage.getItem('amounts') === null ?
+            [] :
+            JSON.parse(localStorage.getItem('amounts'))
+    )
+
+    useEffect(() => {
+        localStorage.setItem("amounts", JSON.stringify(valueProd));
+    })
+    useEffect(() => {
+        localStorage.setItem("item", JSON.stringify(prod))
+    },)
+
+    const [itemsDetails, setItemDetails] = useState([
         {
             name: "Suit",
-            category: suitName,
-            order: suitsOrder,
-            quantity: suits,
+            category: 'SB',
+            order: '',
+            quantity: '1',
             qntDetails,
             price: 150,
             totalPrice: 0
         },
         {
             name: "Coat",
-            category: coatName,
-            order: coatOrder,
-            quantity: coat,
+            category: 'SB',
+            order: '',
+            quantity: '1',
             qntDetails,
             price: 150,
             totalPrice: 0
         },
         {
             name: "Sadri",
-            category: sadriName,
-            order: sadriOrder,
-            quantity: sadri,
+            category: 'Shawl collar',
+            order: '',
+            quantity: '1',
             qntDetails,
             price: 70,
             totalPrice: 0
         },
         {
             name: "Shirt",
-            quantity: shirts,
-            order: shirtsOrder,
+            quantity: '1',
+            order: '',
             qntDetails,
             price: 40,
             totalPrice: 0
         },
         {
             name: "Pant",
-            quantity: pants,
-            order: pantsOrder,
+            quantity: '1',
+            order: '',
             qntDetails,
             price: 30,
             totalPrice: 0
         },
         {
             name: "Waiscoat",
-            quantity: waiscoat,
-            order: waiscoatOrder,
+            quantity: '1',
+            order: '',
             qntDetails,
             price: 50,
             totalPrice: 0
         },
-    ]
-    useEffect(() => {
-        localStorage.setItem("item", JSON.stringify(prod))
-    },)
-    const clearDataInput = () => {
-        setSuits("1")
-        setSuitsOrder("")
-        setSadri("1")
-        setSadriOrder("")
-        setShirts("1")
-        setShirtsOrder("")
-        setPants("1")
-        setPantsOrder("")
-        setWaiscoat("1")
-        setWaiscoatOrder("")
-        setInputValue('')
-        setOrderValue('')
-        setSuitName("S B")
-        setSadriName("Shawl collar")
+    ])
+    function deleteAmount() {
+        localStorage.removeItem('amounts');
+        setValueProd(0)
     }
-    const AddData = (itemsDetails, newValue, newOrderValue, newItemType) => {
-        qntDetails = []
+    const clearDataInput = () => {
+        itemsDetails.map((s, ind) => {
+            if (value === s.name) {
+                let newObject = itemsDetails;
+                let i = ind;
+                newObject[i] = { ...newObject[i], quantity: '1', order: '', category: 'SB' }
+                setItemDetails(newObject);
+                setInputValue('')
+                setOrderValue('')
+            }
+        })
+    }
+    const AddData = (itemsDetails) => {
+        itemsDetails.qntDetails = []
         const qntArray = {
             order: itemsDetails.order,
             date: Date.format(),
@@ -133,7 +115,7 @@ function Item() {
             qnt: itemsDetails.quantity,
         }
         let a = 0;
-        if (prod !== null) {
+        if (prod.length !== 0) {
             let newProd = [];
             for (let i = 0; i < prod.length; i++) {
                 if (prod[i].name === itemsDetails.name) {
@@ -149,7 +131,6 @@ function Item() {
                 else { newProd[i] = prod[i] }
             }
             setProd(newProd)
-
         }
         if (a === 0) {
             let sum = 0;
@@ -212,31 +193,25 @@ function Item() {
     }
 
     const submit = () => {
-        if (suits === '' && sadri === '' && shirts === '' && pants === '' && waiscoat === '') {
+        if (itemsDetails[0].name === '' && itemsDetails[1].name === '' && itemsDetails[2].name === ''
+            && itemsDetails[3].name === '' && itemsDetails[4].name === '' && itemsDetails[5].name === '') {
             alert("Please Enter atleast one")
+        }
+        if (aler !== 0) {
+            alert("please add after 3 second")
         }
         else {
             for (let i = 0; i < itemsDetails.length; i++) {
                 if (itemsDetails[i].name === value) {
-                    let a = 0;
-                    if (prod.length !== 0) {
-                        for (let k = 0; k < prod.length; k++) {
-                            if (prod[k].name === itemsDetails[i].name) {
-                                // editt(itemsDetails[i])
-                                AddData(itemsDetails[i])
-                                clearDataInput();
-                                a++;
-                            }
-                        }
-                    }
-                    if (a === 0) { AddData(itemsDetails[i]) }
+                    AddData(itemsDetails[i])
                 }
             }
+            clearDataInput();
             setAler(1)
             setTimeout(() => {
                 setAler(0)
             }, 3000);
-        } clearDataInput()
+        }
     }
     const Previe = () => {
         if (prod.length === 0) { alert("No items to display, please add a new items") }
@@ -256,9 +231,7 @@ function Item() {
     }
     const delItem = (itemIdx) => {
         if (window.confirm(`Are you sure to delete ${prod[itemIdx].name} ?`)) {
-            setProd(prod.filter((e) => {
-                return (e !== prod[itemIdx])
-            }))
+            setProd(prod.filter((e, i) => i !== itemIdx))
         }
     }
     const clear = () => {
@@ -267,68 +240,68 @@ function Item() {
             clearDataInput();
         }
         else if (window.confirm("Are you sure to delete all the items")) {
-            clearDataInput();
             localStorage.clear();
             setProd([])
+            clearDataInput();
             setShowData(!showData)
         }
     }
     const changeValue = (e) => {
         if (value !== '') {
             setInputValue(e.target.value)
-        }
-        if (value === 'Suit') {
-            setSuits(e.target.value)
-            console.log("1")
-        }
-        if (value === 'Sadri') {
-            setSadri(e.target.value)
-            console.log("2")
-        }
-        if (value === 'Shirt') {
-            setShirts(e.target.value)
-            console.log("3")
-        }
-        if (value === 'Pant') {
-            setPants(e.target.value)
-            console.log("4")
-        }
-        if (value === 'Waiscoat') {
-            setWaiscoat(e.target.value)
-            console.log("5")
-        }
-        if (value === 'milaAmount') {
-            setMila(e.target.value)
+            itemsDetails.map((s, ind) => {
+                if (value === s.name) {
+                    let newObject = itemsDetails;
+                    let i = ind;
+                    newObject[i] = { ...newObject[i], quantity: e.target.value }
+                    setItemDetails(newObject);
+                }
+            })
         }
     }
     const changeOrderValue = (e) => {
         if (value !== '') {
             setOrderValue(e.target.value)
-        }
-        if (value === 'Suit') {
-            setSuitsOrder(e.target.value)
-        }
-        if (value === 'Sadri') {
-            setSadriOrder(e.target.value)
-        }
-        if (value === 'Shirt') {
-            setShirtsOrder(e.target.value)
-        }
-        if (value === 'Pant') {
-            setPantsOrder(e.target.value)
-        }
-        if (value === 'Waiscoat') {
-            setWaiscoatOrder(e.target.value)
+            itemsDetails.map((s, ind) => {
+                if (value === s.name) {
+                    let newObject = itemsDetails;
+                    let i = ind;
+                    newObject[i] = { ...newObject[i], order: e.target.value }
+                    setItemDetails(newObject);
+                    
+                }
+            })
         }
     }
     function changeCategory(e) {
-        if (value === 'Suit') {
+        if (value !== '') {
             setCategoryValue(e.target.value)
-            setSuitName(e.target.value)
+            itemsDetails.map((s, ind) => {
+                if (value === s.name) {
+                    let newObject = itemsDetails;
+                    let i = ind;
+                    newObject[i] = { ...newObject[i], category: e.target.value }
+                    setItemDetails(newObject);
+                    
+                }
+            })
         }
-        if (value === 'Sadri') {
-            setCategoryValue(e.target.value)
-            setSadriName(e.target.value)
+    }
+
+    const changeAmount = (e) => {
+        if (total < mila) {
+            alert('please enter amount less than total price')
+        }
+        if (mila === '') {
+            alert('please enter the amount')
+        }
+        else {
+            setValueProd(valueProd => ([...valueProd, Number(mila)]))
+            setMila('')
+            setAler(1)
+            setTimeout(() => {
+                setAler(0)
+            }, 3000);
         }
     }
     const checkBoxArray = [
@@ -340,24 +313,6 @@ function Item() {
         "Waiscoat",
         "milaAmount"
     ]
-
-    const changeAmount = (e) => {
-        console.log(mila)
-        if (total < mila) {
-            alert('please enter amount less than total price')
-        }
-        if (mila === '') {
-            alert('please enter the amount')
-        }
-        else {
-                setValueProd(valueProd => ([...valueProd, Number(mila)]))
-            setMila('')
-            setAler(1)
-            setTimeout(() => {
-                setAler(0)
-            }, 3000);
-        }
-    }
 
     return (
         <>
@@ -372,7 +327,7 @@ function Item() {
                             name="drone"
                             value={a}
                         />
-                        <label className='liItem' for={a}>{a}</label>
+                        <label className='liItem' htmlFor={a}>{a}</label>
                     </div>
                 ))}
             </div>
@@ -386,7 +341,7 @@ function Item() {
                 {value !== '' ? (
                     <div className="input-group flex-nowrap my-2 " >
                         <span className="input-group-text" id="addon-wrapping">{value}</span>
-                        {value === 'Suit' || value === 'Sadri' ||value==='Coat'? (
+                        {value === 'Suit' || value === 'Sadri' || value === 'Coat' ? (
                             <select value={categoryValue}
                                 onChange={changeCategory}
                                 className="form-select"
@@ -394,20 +349,20 @@ function Item() {
                             >
                                 {value === 'Suit' ? (
                                     <>
-                                        <option>S B</option>
+                                        <option>SB</option>
                                         <option>Shawl collar</option>
-                                        <option>D B</option>
+                                        <option>DB</option>
                                         <option>Prince</option>
                                         <option>Three piece</option>
                                     </>
-                                ) : value=== 'Coat'?(
+                                ) : value === 'Coat' ? (
                                     <>
-                                        <option>S B</option>
+                                        <option>SB</option>
                                         <option>Shawl collar</option>
-                                        <option>D B</option>
+                                        <option>DB</option>
                                         <option>Prince</option>
                                     </>
-                                ):
+                                ) :
                                     <>
                                         <option>Shawl collar</option>
                                         <option>Normal collar</option>

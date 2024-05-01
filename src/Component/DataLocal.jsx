@@ -84,11 +84,10 @@ function DataLocal({ prod,
             setEditToggle(!editToggle)
         }
     }
-    const  [itemdetails, setItemDetails]=useState()
+    const [itemdetails, setItemDetails] = useState()
     const showItemDetails = (itemIdx) => {
         setItemDetails(itemIdx)
         setShowDetails(!showDetails)
-        console.log(showDetails)
     }
     return (
         <>
@@ -114,13 +113,13 @@ function DataLocal({ prod,
                                                 {quntities[itemIdx]}
                                             </span>
                                             {
-                                                showDetails === true &&itemIdx===itemdetails ? (
+                                                showDetails === true && itemIdx === itemdetails ? (
                                                     <IoIosArrowBack onClick={() => { setItemDetails('e') }} />
                                                 ) :
                                                     <IoIosArrowDown onClick={() => { showItemDetails(itemIdx) }} />
                                             }
                                             {
-                                                showDetails === true && itemIdx===itemdetails ? (
+                                                showDetails === true && itemIdx === itemdetails ? (
                                                     <span className="qnticon addicon">
                                                         <MdAdd style={{ margin: '7px 18px' }} onClick={() => { setQntdlgValue(item) }} />
                                                     </span>
@@ -128,11 +127,11 @@ function DataLocal({ prod,
                                             }
                                         </div>
                                     </tr>
-                                    {showDetails === true && itemdetails===itemIdx ? (
+                                    {showDetails === true && itemdetails === itemIdx ? (
                                         <tr className=" table-active table-bordered text-center">
                                             <th>Order</th>
                                             <th>Date</th>
-                                            {item.name === "Suit" || item.name === "Sadri" ?
+                                            {item.name === "Suit" || item.name === "Sadri" || item.name === 'Coat' ?
                                                 (<th>Types</th>) :
                                                 null}
                                             <th>QNT</th>
@@ -141,37 +140,19 @@ function DataLocal({ prod,
                                     ) : null}
                                     {showDetails === true ? (
                                         item.qntDetails && item.qntDetails.map((qntItem, qntIdx) => (
-                                            // <tr className="text-center">
-                                            //     <td>{qntItem.date}</td>
-                                            //     {qntItem.order !== "" ?
-                                            //         (<td>{qntItem.order}</td>) :
-                                            //         <td>-</td>}
-                                            //     {item.name === "Suit" || item.name === "Sadri" ?
-                                            //         (<td>{qntItem.category}</td>) :
-                                            //         null}
-                                            //     <td>{qntItem.qnt}</td>
-                                            //     <td>
-                                            //         <span className="qnticon">
-                                            //             <MdOutlineModeEdit className="editt" onClick={() => { editqntValue(item, qntIdx) }} />
-                                            //         </span>
-                                            //         <span className="qnticon">
-                                            //             <RiDeleteBinLine className="iconn" onClick={() => { delItemQnt(itemIdx, qntIdx) }} />
-                                            //         </span>
-                                            //     </td>
-                                            // </tr>
-                                                <QntDetailsInfo
-                                                    qntItemDate={qntItem.date}
-                                                    qntItemOrder={qntItem.order}
-                                                    qntItemCategory={qntItem.category}
-                                                    qntItemQnt={qntItem.qnt}
-                                                    itemName={item.name}
-                                                    itemIdx={itemIdx}
-                                                    itemdetails={itemdetails}
-                                                    qntIdx={qntIdx}
-                                                    item={item}
-                                                    delItemQnt={delItemQnt}
-                                                    editqntValue={editqntValue}
-                                                />
+                                            <QntDetailsInfo
+                                                qntItemDate={qntItem.date}
+                                                qntItemOrder={qntItem.order}
+                                                qntItemCategory={qntItem.category}
+                                                qntItemQnt={qntItem.qnt}
+                                                itemName={item.name}
+                                                itemIdx={itemIdx}
+                                                itemdetails={itemdetails}
+                                                qntIdx={qntIdx}
+                                                item={item}
+                                                delItemQnt={delItemQnt}
+                                                editqntValue={editqntValue}
+                                            />
                                         ))
                                     ) : null
                                     }
@@ -266,6 +247,13 @@ function DataLocal({ prod,
                                         <option >Shawl collar</option>
                                         <option>Normal collar</option>
                                     </select>
+                                ) : item.name === 'Coat' ? (
+                                    <select value={newItemType} onChange={(e) => setNewItemType(e.target.value)} className="form-select" aria-label="Default select example">
+                                        <option >Shawl collar</option>
+                                        <option>DB</option>
+                                        <option>SB</option>
+                                        <option>Prince</option>
+                                    </select>
                                 ) : null
                             }
                             <input style={{ width: "100px" }} type="number" value={newValue} onChange={(e) => setNewValue(e.target.value)} className="form-control" placeholder="Enter no." aria-label="First Name" aria-describedby="addon-wrapping" />
@@ -292,12 +280,18 @@ function DataLocal({ prod,
                                         <option>S B</option>
                                         <option>Prince</option>
                                         <option>Three piece</option>
-                                        <option>coat/blazer</option>
                                     </select>
                                 ) : itemEdit.name === 'Sadri' ? (
                                     <select value={newItemType} onChange={(e) => setNewItemType(e.target.value)} className="form-select" aria-label="Default select example">
                                         <option >Shawl collar</option>
                                         <option>Normal collar</option>
+                                    </select>
+                                ) : itemEdit.name === 'Coat' ? (
+                                    <select value={newItemType} onChange={(e) => setNewItemType(e.target.value)} className="form-select" aria-label="Default select example">
+                                        <option >Shawl collar</option>
+                                        <option>D B</option>
+                                        <option>S B</option>
+                                        <option>Prince</option>
                                     </select>
                                 ) : null
                             }
