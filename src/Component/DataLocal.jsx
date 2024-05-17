@@ -6,11 +6,13 @@ import { MdAdd } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Dialog } from '@mui/material';
 import QntDetailsInfo from "./QntDetailsIinfo";
+import './style.css'
 
 function DataLocal({ prod,
     total,
     editqntDetails,
     addNewDataInExistingItem,
+    AddData,
     delItem,
     delItemQnt,
     valueProd,
@@ -37,7 +39,13 @@ function DataLocal({ prod,
         setAddToggle(!addToggle)
     }
     const addQntDetails = (item, newValue, newOrderValue, newItemType) => {
-        addNewDataInExistingItem(item, newValue, newOrderValue, newItemType)
+        if (newValue === '' && newOrderValue === '') {
+            alert("please add a value")
+            setAddToggle(!addToggle)
+            return
+        }
+        // addNewDataInExistingItem(item, newValue, newOrderValue, newItemType)
+        AddData(item, newValue, newOrderValue, newItemType)
         setAddToggle(!addToggle)
         setNewValue('')
         setNewOrderValue('')
@@ -67,7 +75,7 @@ function DataLocal({ prod,
         let a = 0
         for (let j = 0; j < prod[i].qntDetails.length; j++) {
             quntities[i] = 0;
-            a = Number(a + Number(prod[i].qntDetails[j].qnt));
+            a = a + Number(prod[i].qntDetails[j].qnt);
         }
         quntities[i] = a;
     }
@@ -128,7 +136,7 @@ function DataLocal({ prod,
                                         </div>
                                     </tr>
                                     {showDetails === true && itemdetails === itemIdx ? (
-                                        <tr className=" table-active table-bordered text-center">
+                                        <tr className="table-active table-bordered text-center">
                                             <th>Order</th>
                                             <th>Date</th>
                                             {item.name === "Suit" || item.name === "Sadri" || item.name === 'Coat' ?
@@ -181,7 +189,7 @@ function DataLocal({ prod,
                                     <td></td>
                                     <td></td>
                                     <td className="text-center">
-                                        <th className="table-bordered">
+                                        <tr className="text-center" style={{ display: 'inline' }}>
                                             <div style={{ border: "0.5px solid rgb(222, 224, 224)" }}>
                                                 <span style={{ margin: "10px 25px" }}>
                                                     {MilaTotal}
@@ -193,14 +201,23 @@ function DataLocal({ prod,
                                                         <IoIosArrowDown onClick={() => { setShowDetails(!showDetails) }} />
                                                 }
                                             </div>
-                                            <td>y</td>
-                                            <td>55</td>
-                                        </th>
+                                        </tr>
+
+                                        <tr className="table table-active table-bordered" >
+                                            <th>date</th>
+                                            <th>amount</th>
+                                            <th></th>
+                                        </tr>
                                         {valueProd && valueProd.map((amount) => (
-                                            <tr className="table-bordered">
-                                                <td>Mila={amount}</td>
+                                            <tr className="table table-bordered">
+                                                <td>Date</td>
+                                                <td>{amount}</td>
+                                                <td>
+                                                    <RiDeleteBinLine onClick={deleteAmount} className="iconn" />
+                                                </td>
                                             </tr>
                                         ))}
+
                                     </td>
                                     <td>
                                         <span className="qnticon">
@@ -227,7 +244,9 @@ function DataLocal({ prod,
                 <Dialog open={addToggle}
                     onClose={() => { setAddToggle(!addToggle) }}
                 >
-                    <IoMdClose onClick={() => { closeDialog("addtoggle") }} style={{ width: 'fit-content', fontSize: '30px' }} />
+                    <p className="closeButton">
+                        <IoMdClose onClick={() => { closeDialog("addtoggle") }} />
+                    </p>
                     <div style={{ margin: "40px", width: "400px", height: "200px" }}>
                         <h4>Add a new value of {item.name}</h4>
                         <div className="input-group flex-nowrap my-2 "  >
@@ -267,7 +286,9 @@ function DataLocal({ prod,
                 <Dialog open={editToggle}
                     onClose={closeDialog}
                 >
-                    <IoMdClose onClick={closeDialog} style={{ width: 'fit-content', fontSize: '30px' }} />
+                    <p className="closeButton">
+                        <IoMdClose onClick={closeDialog} style={{ width: 'fit-content', fontSize: '30px', alignItems: 'right' }} />
+                    </p>
                     <div style={{ margin: "40px", width: "400px", height: "200px" }}>
                         <h4>Add a new value of {itemEdit.name}</h4>
                         <div className="input-group flex-nowrap my-2 "  >

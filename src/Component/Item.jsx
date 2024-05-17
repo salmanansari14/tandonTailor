@@ -2,6 +2,7 @@ import './style.css';
 import { useState, useEffect } from 'react'
 import DateObject from "react-date-object";
 import DataLocal from './DataLocal';
+import InputComponent from './InputComponent';
 
 function Item() {
 
@@ -92,14 +93,18 @@ function Item() {
     ])
     function deleteAmount() {
         localStorage.removeItem('amounts');
-        setValueProd(0)
+        setValueProd([])
     }
     const clearDataInput = () => {
         itemsDetails.map((s, ind) => {
             if (value === s.name) {
                 let newObject = itemsDetails;
                 let i = ind;
-                newObject[i] = { ...newObject[i], quantity: '1', order: '', category: 'SB' }
+                newObject[i] = {
+                    ...newObject[i], quantity: '1',
+                    order: '',
+                    category: (s.name === 'Sadri' ? 'Shawl collar' : 'SB')
+                }
                 setItemDetails(newObject);
                 setInputValue('')
                 setOrderValue('')
@@ -108,7 +113,7 @@ function Item() {
     }
     const AddData = (itemsDetails) => {
         itemsDetails.qntDetails = []
-        const qntArray = {
+        let qntArray = {
             order: itemsDetails.order,
             date: Date.format(),
             category: itemsDetails.category,
@@ -119,6 +124,7 @@ function Item() {
             let newProd = [];
             for (let i = 0; i < prod.length; i++) {
                 if (prod[i].name === itemsDetails.name) {
+                    console.log(itemsDetails.name, prod[i].name)
                     prod[i].qntDetails.push(qntArray)
                     let sum = 0;
                     for (let j = 0; j < prod[i].qntDetails.length; j++) {
@@ -126,9 +132,12 @@ function Item() {
                     }
                     prod[i].totalPrice = sum * prod[i].price;
                     newProd[i] = prod[i]
+                    console.log("g")
                     a++;
                 }
-                else { newProd[i] = prod[i] }
+                else {
+                    newProd[i] = prod[i]
+                }
             }
             setProd(newProd)
         }
@@ -165,6 +174,7 @@ function Item() {
     }
 
     const editqntDetails = (item, qntIdx, newValue, newOrderValue, newItemType) => {
+        console.log("fffjjj")
         if (newValue === '' && newOrderValue === '') {
             alert("please enter a value")
         }
@@ -203,6 +213,7 @@ function Item() {
         else {
             for (let i = 0; i < itemsDetails.length; i++) {
                 if (itemsDetails[i].name === value) {
+                    // console.log(itemsDetails[i])
                     AddData(itemsDetails[i])
                 }
             }
@@ -248,11 +259,11 @@ function Item() {
     }
     const changeValue = (e) => {
         if (value !== '') {
+            console.log(e.target.name)
             setInputValue(e.target.value)
             itemsDetails.map((s, ind) => {
                 if (value === s.name) {
-                    let newObject = itemsDetails;
-                    let i = ind;
+                    let newObject = itemsDetails, i = ind;
                     newObject[i] = { ...newObject[i], quantity: e.target.value }
                     setItemDetails(newObject);
                 }
@@ -268,7 +279,7 @@ function Item() {
                     let i = ind;
                     newObject[i] = { ...newObject[i], order: e.target.value }
                     setItemDetails(newObject);
-                    
+
                 }
             })
         }
@@ -282,26 +293,53 @@ function Item() {
                     let i = ind;
                     newObject[i] = { ...newObject[i], category: e.target.value }
                     setItemDetails(newObject);
-                    
+
                 }
             })
         }
     }
 
     const changeAmount = (e) => {
-        if (total < mila) {
-            alert('please enter amount less than total price')
+        setMila(e.target.value)
+        // if (total < mila) {
+        //     alert('please enter amount less than total price')
+        // }
+        // if (mila === '') {
+        //     alert('please enter the amount')
+        // }
+        // else {
+        //     setValueProd(valueProd => [...valueProd, Number(mila)])
+        //     setMila('')
+        //     setAler(1)
+        //     setTimeout(() => {
+        //         setAler(0)
+        //     }, 3000);
+        // }
+    }
+    const changeSubmit = () => {
+        let MilaTotal = Number()
+        for (let i = 0; i < valueProd.length; i++) {
+            MilaTotal = Number(MilaTotal + valueProd[i]);
         }
         if (mila === '') {
             alert('please enter the amount')
         }
+        if (total < mila) {
+            alert('please enter amount less than total price')
+        }
         else {
-            setValueProd(valueProd => ([...valueProd, Number(mila)]))
-            setMila('')
-            setAler(1)
-            setTimeout(() => {
-                setAler(0)
-            }, 3000);
+            MilaTotal += Number(mila)
+            if (MilaTotal > total) {
+                alert('your total mila amount is greater than total amount, please enter the amount which is less than total')
+            }
+            else {
+                setValueProd(valueProd => [...valueProd, Number(mila)])
+                setMila('')
+                setAler(1)
+                setTimeout(() => {
+                    setAler(0)
+                }, 3000);
+            }
         }
     }
     const checkBoxArray = [
@@ -323,9 +361,7 @@ function Item() {
                         <input className='liItem'
                             type="radio"
                             onChange={(e) => { setValue(e.target.id) }}
-                            id={a}
-                            name="drone"
-                            value={a}
+                            id={a} name="drone" value={a}
                         />
                         <label className='liItem' htmlFor={a}>{a}</label>
                     </div>
@@ -338,83 +374,21 @@ function Item() {
                 </h4>
             </div>
             <div className='content'>
-                {value !== '' ? (
-                    <div className="input-group flex-nowrap my-2 " >
-                        <span className="input-group-text" id="addon-wrapping">{value}</span>
-                        {value === 'Suit' || value === 'Sadri' || value === 'Coat' ? (
-                            <select value={categoryValue}
-                                onChange={changeCategory}
-                                className="form-select"
-                                aria-label="Default select example"
-                            >
-                                {value === 'Suit' ? (
-                                    <>
-                                        <option>SB</option>
-                                        <option>Shawl collar</option>
-                                        <option>DB</option>
-                                        <option>Prince</option>
-                                        <option>Three piece</option>
-                                    </>
-                                ) : value === 'Coat' ? (
-                                    <>
-                                        <option>SB</option>
-                                        <option>Shawl collar</option>
-                                        <option>DB</option>
-                                        <option>Prince</option>
-                                    </>
-                                ) :
-                                    <>
-                                        <option>Shawl collar</option>
-                                        <option>Normal collar</option>
-                                    </>
-                                }
-                            </select>
-                        ) : null
-                        }
-                        {value !== 'milaAmount' ? (
-                            <select value={inputValue}
-                                onChange={changeValue}
-                                className="suit-selected form-select"
-                                aria-label="Default select example"
-                            >
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                            </select>
-                        ) :
-                            <input style={{ width: "100px" }}
-                                value={mila} onChange={(e) => { setMila(e.target.value) }}
-                                type="text"
-                                className="form-control"
-                                placeholder="Enter Mila Amount"
-                                aria-label="Last Name"
-                                aria-describedby="addon-wrapping"
-                            />
-                        }
-                        {value !== 'milaAmount' ? (
-                            <input style={{ width: "100px" }}
-                                value={orderValue} onChange={changeOrderValue}
-                                type="text"
-                                className="form-control"
-                                placeholder="Order no. shirts"
-                                aria-label="Last Name"
-                                aria-describedby="addon-wrapping"
-                            />
-                        ) : null
-                        }
-                    </div>
-                ) : null}
+                <InputComponent
+                    value={value}
+                    inputValue={inputValue}
+                    orderValue={orderValue}
+                    categoryValue={categoryValue}
+                    mila={mila}
+                    changeValue={changeValue}
+                    changeOrderValue={changeOrderValue}
+                    changeCategory={changeCategory}
+                    changeAmount={changeAmount}
+                />
                 <div className='btns'>
                     <div>
                         {value !== '' ? (
-                            <button onClick={value === 'milaAmount' ? (changeAmount) : submit}
+                            <button onClick={value === 'milaAmount' ? changeSubmit : submit}
                                 type="submit"
                                 className="btn btn-sm btn-primary">
                                 Save</button>
@@ -441,6 +415,7 @@ function Item() {
                         total={total}
                         showData={showData}
                         addNewDataInExistingItem={addNewDataInExistingItem}
+                        AddData={AddData}
                         editqntDetails={editqntDetails}
                         delItem={delItem}
                         delItemQnt={delItemQnt}

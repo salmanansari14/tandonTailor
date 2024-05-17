@@ -1,17 +1,18 @@
 import { MdOutlineModeEdit } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-function QntDetailsInfo({ delItemQnt,
-    itemIdx,
-    itemdetails,
-    qntIdx,
+function QntDetailsInfo({ 
     qntItemDate,
     qntItemOrder,
     qntItemCategory,
     qntItemQnt,
-    item,
     itemName,
-    editqntValue }) {
+    itemIdx,
+    itemdetails,
+    qntIdx,
+    item,
+    delItemQnt,
+    editqntValue, }) {
     return (
         <>
             {itemIdx === itemdetails ? (
