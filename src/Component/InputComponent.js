@@ -16,7 +16,7 @@ function InputComponent({
             {value !== '' ? (
                 <div className="input-group flex-nowrap my-2 " >
                     <span className="input-group-text" id="addon-wrapping">{value}</span>
-                    {value === 'Suit' || value === 'Sadri' || value === 'Coat' ? (
+                    {value === 'Suit' || value === 'Sadri' || value === 'Coat' || value === 'Pajama' ? (
                         <select value={categoryValue}
                             onChange={changeCategory}
                             className="form-select"
@@ -36,6 +36,12 @@ function InputComponent({
                                     <option>Shawl collar</option>
                                     <option>DB</option>
                                     <option>Prince</option>
+                                </>
+                            ) : value === 'Pajama' ? (
+                                <>
+                                    <option>Shalwar</option>
+                                    <option>Chudidar</option>
+                                    <option>Aligarh</option>
                                 </>
                             ) :
                                 <>

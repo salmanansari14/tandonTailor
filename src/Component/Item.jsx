@@ -67,6 +67,23 @@ function Item() {
             totalPrice: 0
         },
         {
+            name: "Kurta",
+            order: '',
+            quantity: '1',
+            qntDetails,
+            price: 90,
+            totalPrice: 0
+        },
+        {
+            name: "Pajama",
+            category: 'Shalwar',
+            order: '',
+            quantity: '1',
+            qntDetails,
+            price: 30,
+            totalPrice: 0
+        },
+        {
             name: "Shirt",
             quantity: '1',
             order: '',
@@ -99,16 +116,16 @@ function Item() {
         itemsDetails.map((s, ind) => {
             if (value === s.name) {
                 let newObject = itemsDetails;
-                let i = ind;
-                newObject[i] = {
-                    ...newObject[i], quantity: '1',
+                newObject[ind] = {
+                    ...newObject[ind], quantity: '1',
                     order: '',
-                    category: (s.name === 'Sadri' ? 'Shawl collar' : 'SB')
+                    category: (s.name === 'Sadri' ? 'Shawl collar' : s.name === 'Pajama' ? 'Shalwar' : 'SB')
                 }
                 setItemDetails(newObject);
                 setInputValue('')
                 setOrderValue('')
             }
+            return null;
         })
     }
     const AddData = (itemsDetails) => {
@@ -174,7 +191,6 @@ function Item() {
     }
 
     const editqntDetails = (item, qntIdx, newValue, newOrderValue, newItemType) => {
-        console.log("fffjjj")
         if (newValue === '' && newOrderValue === '') {
             alert("please enter a value")
         }
@@ -203,17 +219,16 @@ function Item() {
     }
 
     const submit = () => {
-        if (itemsDetails[0].name === '' && itemsDetails[1].name === '' && itemsDetails[2].name === ''
-            && itemsDetails[3].name === '' && itemsDetails[4].name === '' && itemsDetails[5].name === '') {
-            alert("Please Enter atleast one")
-        }
+        // if (itemsDetails[0].name === '' && itemsDetails[1].name === '' && itemsDetails[2].name === ''
+        //     && itemsDetails[3].name === '' && itemsDetails[4].name === '' && itemsDetails[5].name === '') {
+        //     alert("Please Enter atleast one")
+        // }
         if (aler !== 0) {
             alert("please add after 3 second")
         }
         else {
             for (let i = 0; i < itemsDetails.length; i++) {
                 if (itemsDetails[i].name === value) {
-                    // console.log(itemsDetails[i])
                     AddData(itemsDetails[i])
                 }
             }
@@ -221,7 +236,7 @@ function Item() {
             setAler(1)
             setTimeout(() => {
                 setAler(0)
-            }, 3000);
+            }, 2000);
         }
     }
     const Previe = () => {
@@ -267,6 +282,7 @@ function Item() {
                     newObject[i] = { ...newObject[i], quantity: e.target.value }
                     setItemDetails(newObject);
                 }
+                return null;
             })
         }
     }
@@ -281,10 +297,11 @@ function Item() {
                     setItemDetails(newObject);
 
                 }
+                return null;
             })
         }
     }
-    function changeCategory(e) {
+    const changeCategory = (e) => {
         if (value !== '') {
             setCategoryValue(e.target.value)
             itemsDetails.map((s, ind) => {
@@ -293,37 +310,26 @@ function Item() {
                     let i = ind;
                     newObject[i] = { ...newObject[i], category: e.target.value }
                     setItemDetails(newObject);
-
                 }
+                return null;
             })
         }
     }
 
     const changeAmount = (e) => {
         setMila(e.target.value)
-        // if (total < mila) {
-        //     alert('please enter amount less than total price')
-        // }
-        // if (mila === '') {
-        //     alert('please enter the amount')
-        // }
-        // else {
-        //     setValueProd(valueProd => [...valueProd, Number(mila)])
-        //     setMila('')
-        //     setAler(1)
-        //     setTimeout(() => {
-        //         setAler(0)
-        //     }, 3000);
-        // }
     }
     const changeSubmit = () => {
-        let MilaTotal = Number()
+        let MilaTotal = 0
         for (let i = 0; i < valueProd.length; i++) {
             MilaTotal = Number(MilaTotal + valueProd[i]);
         }
         if (mila === '') {
             alert('please enter the amount')
         }
+        // if(total ===0){
+
+        // }
         if (total < mila) {
             alert('please enter amount less than total price')
         }
@@ -346,32 +352,37 @@ function Item() {
         "Suit",
         "Coat",
         "Sadri",
+        "Kurta",
+        "Pajama",
         "Shirt",
         "Pant",
         "Waiscoat",
         "milaAmount"
     ]
+    console.log(prod.length)
 
     return (
         <>
             <h1 className='text-center'>Welcome</h1>
             <div className='select-item'>
-                {checkBoxArray.map((a) => (
-                    <div className="form-check form-check-inline">
-                        <input className='liItem'
-                            type="radio"
-                            onChange={(e) => { setValue(e.target.id) }}
-                            id={a} name="drone" value={a}
-                        />
-                        <label className='liItem' htmlFor={a}>{a}</label>
-                    </div>
+                {checkBoxArray.map((a, i) => (
+                    checkBoxArray[i] !== 'milaAmount' || total !== 0 ? (
+                        <div className="form-check form-check-inline">
+                            <input className='liItem'
+                                type="radio"
+                                onChange={(e) => { setValue(e.target.id) }}
+                                id={a} name="drone" value={a}
+                            />
+                            <label className='liItem' htmlFor={a}>{a}</label>
+                        </div>
+                    ) : null
                 ))}
             </div>
             <div className='text-center'>
-                <h4>
+                <h5>
                     {value === '' ? ("Check the box to add a data"
                     ) : `Enter the value of ${value}`}
-                </h4>
+                </h5>
             </div>
             <div className='content'>
                 <InputComponent
@@ -394,12 +405,20 @@ function Item() {
                                 Save</button>
                         ) : null
                         }
-                        <button onClick={Previe} type="submit" className="btn btn-sm btn-success mx-3">
-                            preview</button>
+                        {
+                            prod.length !== 0 ? (
+                                <button onClick={Previe} type="submit" className="btn btn-sm btn-success mx-3">
+                                    preview
+                                </button>) : null
+                        }
                     </div>
-                    <button onClick={clear} type="submit" className="btn btn-sm btn-danger">
-                        Delete all
-                    </button>
+                    {
+                        prod.length !== 0 ? (
+                            <button onClick={clear} type="submit" className="btn btn-sm btn-danger">
+                                Delete all
+                            </button>
+                        ) : null
+                    }
                 </div>
                 {
                     aler !== 0 ? (

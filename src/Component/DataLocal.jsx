@@ -44,8 +44,8 @@ function DataLocal({ prod,
             setAddToggle(!addToggle)
             return
         }
-        // addNewDataInExistingItem(item, newValue, newOrderValue, newItemType)
-        AddData(item, newValue, newOrderValue, newItemType)
+        addNewDataInExistingItem(item, newValue, newOrderValue, newItemType)
+        // AddData(item, newValue, newOrderValue, newItemType)
         setAddToggle(!addToggle)
         setNewValue('')
         setNewOrderValue('')
@@ -192,7 +192,7 @@ function DataLocal({ prod,
                                         <tr className="text-center" style={{ display: 'inline' }}>
                                             <div style={{ border: "0.5px solid rgb(222, 224, 224)" }}>
                                                 <span style={{ margin: "10px 25px" }}>
-                                                    {MilaTotal}
+                                                    Mila amt {MilaTotal}
                                                 </span>
                                                 {
                                                     showDetails === true ? (
@@ -202,14 +202,13 @@ function DataLocal({ prod,
                                                 }
                                             </div>
                                         </tr>
-
-                                        <tr className="table table-active table-bordered" >
+                                        <tr className="table text-center table-active table-bordered" >
                                             <th>date</th>
                                             <th>amount</th>
                                             <th></th>
                                         </tr>
                                         {valueProd && valueProd.map((amount) => (
-                                            <tr className="table table-bordered">
+                                            <tr className="table text-center table-bordered">
                                                 <td>Date</td>
                                                 <td>{amount}</td>
                                                 <td>

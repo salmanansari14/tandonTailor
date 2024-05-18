@@ -21,7 +21,7 @@ function QntDetailsInfo({
                         (<td>{qntItemOrder}</td>) :
                         <td>-</td>}
                     <td>{qntItemDate}</td>
-                    {itemName === "Suit" || itemName === "Sadri" || itemName === "Coat" ?
+                    {itemName === "Suit" || itemName === "Sadri" || itemName === "Coat" || itemName === 'Pajama' ?
                         (<td>{qntItemCategory}</td>) :
                         null}
                     <td>{qntItemQnt}</td>
