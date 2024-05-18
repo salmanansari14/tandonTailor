@@ -119,6 +119,7 @@ thead {
 
 .elseSpan {
     display: block;
+    color: rgb(165, 165, 165);
     width: fit-content;
     margin: 15px auto;
 }
@@ -149,5 +150,8 @@ thead {
         overflow: scroll;
         border-radius: 8px;
         text-align: center;
+    }
+    .content{
+        width: 95%;
     }
 }
