@@ -29,6 +29,8 @@ function DataLocal({ prod,
     const [itemEdit, setItemEdit] = useState([])
     const [qntEditIdx, setQntEditIdx] = useState({})
 
+    const[show, setShow]=useState(false)
+
     const exportData = async () => {
         const doc = new jsPDF()
         autoTable(doc, { html: '#my-table' })
@@ -97,11 +99,15 @@ function DataLocal({ prod,
         setItemDetails(itemIdx)
         setShowDetails(!showDetails)
     }
+    function showHide(){
+        setShow(!show);
+    }
     return (
         <>
             <div className="tablecontainer" id="dd">
-                <table id="my-table" className="my-10 table table-striped table-bordered">
-                    <thead className="table-bordered">
+            <button className="btn btn-primary btn-sm" onClick={showHide}>show</button>
+                <table id="my-table" className="my-10 table table-bordered">
+                    <thead className="table-bordered" style={{ border: "0.5px solid grey" }} >
                         <tr className="table-dark">
                             <th className="text-center">ITEMS</th>
                             <th className="text-center" >QNT</th>
@@ -112,11 +118,11 @@ function DataLocal({ prod,
                     </thead>
                     <tbody>
                         {prod && prod.map((item, itemIdx) => (
-                            <tr className="table-bordered">
+                            <tr className=" table table-bordered">
                                 <td className="aligner" >{item.name}</td>
                                 <td className="text-center ">
                                     <tr style={{ display: "inline" }}>
-                                        <div style={{ border: "0.5px solid rgb(222, 224, 224)" }}>
+                                        <div style={{ border: "0.5px solid #d7d7d7" }}>
                                             <span style={{ margin: "10px 25px" }}>
                                                 {quntities[itemIdx]}
                                             </span>
@@ -139,7 +145,7 @@ function DataLocal({ prod,
                                         <tr className="table-active table-bordered text-center">
                                             <th>Order</th>
                                             <th>Date</th>
-                                            {item.name === "Suit" || item.name === "Sadri" || item.name === 'Coat' ?
+                                            {item.name === "Suit" || item.name === "Sadri" || item.name === 'Coat' ||item.name==='Pajama' ?
                                                 (<th>Types</th>) :
                                                 null}
                                             <th>QNT</th>
@@ -160,6 +166,7 @@ function DataLocal({ prod,
                                                 item={item}
                                                 delItemQnt={delItemQnt}
                                                 editqntValue={editqntValue}
+                                                show={show}
                                             />
                                         ))
                                     ) : null

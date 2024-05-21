@@ -1,7 +1,7 @@
 import { MdOutlineModeEdit } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-function QntDetailsInfo({ 
+function QntDetailsInfo({
     qntItemDate,
     qntItemOrder,
     qntItemCategory,
@@ -12,11 +12,13 @@ function QntDetailsInfo({
     qntIdx,
     item,
     delItemQnt,
-    editqntValue, }) {
+    editqntValue,
+    show }) {
     return (
         <>
-            {itemIdx === itemdetails ? (
-                <tr className="text-center">
+            {
+            itemIdx === itemdetails ? (
+                <tr className="text-center" style={{ border: "0.5px solid rgb(163, 163, 163)" }}>
                     {qntItemOrder !== "" ?
                         (<td>{qntItemOrder}</td>) :
                         <td>-</td>}

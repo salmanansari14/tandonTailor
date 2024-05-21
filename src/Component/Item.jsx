@@ -219,10 +219,6 @@ function Item() {
     }
 
     const submit = () => {
-        // if (itemsDetails[0].name === '' && itemsDetails[1].name === '' && itemsDetails[2].name === ''
-        //     && itemsDetails[3].name === '' && itemsDetails[4].name === '' && itemsDetails[5].name === '') {
-        //     alert("Please Enter atleast one")
-        // }
         if (aler !== 0) {
             alert("please add after 3 second")
         }
@@ -239,11 +235,7 @@ function Item() {
             }, 2000);
         }
     }
-    const Previe = () => {
-        if (prod.length === 0) { alert("No items to display, please add a new items") }
-        else { setShowData(!showData) }
-    }
-
+    
     const delItemQnt = (itemsIndex, indexOfqntDetails) => {
         let DemoProd = [];
         for (let i = 0; i < prod.length; i++) {
@@ -260,6 +252,11 @@ function Item() {
             setProd(prod.filter((e, i) => i !== itemIdx))
         }
     }
+
+    const Previe = () => {
+        if (prod.length === 0) { alert("No items to display, please add a new items") }
+        else { setShowData(!showData) }
+    }
     const clear = () => {
         if (prod.length === 0) {
             alert("you have already no items in your storage")
@@ -272,9 +269,9 @@ function Item() {
             setShowData(!showData)
         }
     }
+
     const changeValue = (e) => {
         if (value !== '') {
-            console.log(e.target.name)
             setInputValue(e.target.value)
             itemsDetails.map((s, ind) => {
                 if (value === s.name) {
@@ -320,16 +317,14 @@ function Item() {
         setMila(e.target.value)
     }
     const changeSubmit = () => {
+        if (mila === '') {
+            alert('please enter the amount')
+            return;
+        }
         let MilaTotal = 0
         for (let i = 0; i < valueProd.length; i++) {
             MilaTotal = Number(MilaTotal + valueProd[i]);
         }
-        if (mila === '') {
-            alert('please enter the amount')
-        }
-        // if(total ===0){
-
-        // }
         if (total < mila) {
             alert('please enter amount less than total price')
         }
@@ -349,17 +344,16 @@ function Item() {
         }
     }
     const checkBoxArray = [
-        "Suit",
-        "Coat",
-        "Sadri",
-        "Kurta",
-        "Pajama",
         "Shirt",
         "Pant",
+        "Suit",
+        "Coat",
+        "Kurta",
+        "Pajama",
+        "Sadri",
         "Waiscoat",
         "milaAmount"
     ]
-    console.log(prod.length)
 
     return (
         <>
