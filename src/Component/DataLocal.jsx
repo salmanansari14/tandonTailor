@@ -106,7 +106,7 @@ function DataLocal({ prod,
         <>
             <div className="tablecontainer" id="dd">
             <button className="btn btn-primary btn-sm" onClick={showHide}>show</button>
-                <table id="my-table" className="my-10 table table-bordered">
+                <table id="my-table" className="my-10 table table-bordered table-striped">
                     <thead className="table-bordered" style={{ border: "0.5px solid grey" }} >
                         <tr className="table-dark">
                             <th className="text-center">ITEMS</th>
