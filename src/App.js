@@ -1,10 +1,8 @@
 import './App.css';
 import Item from "./Component/Item";
-import { BrowserRouter as Router, Route, Link, Routes }
+import { BrowserRouter as Router, Route, Routes }
   from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
-
-import 'react-accessible-accordion/dist/fancy-example.css';
 function App() {
 
   return (

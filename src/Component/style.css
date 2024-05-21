@@ -89,13 +89,17 @@ thead {
     padding-left: 12px;
     text-align: center;
 }
-
+.ttt{
+    color: red; 
+    --bs-table-color-type: rgb(172, 4, 4);
+    font-size: 35px;
+}
 .iconn {
     cursor: pointer;
     font-size: 17px;
-    margin: 0;
+    width: 20px;
+    --bs-table-color-type: rgb(172, 4, 4);
     color: rgb(172, 4, 4);
-    padding: 0;
 }
 
 .editt {
