@@ -114,7 +114,7 @@ function DataLocal({
   }
   return (
     <>
-      <div className="tablecontainer" id="dd">
+      <div className="tablecontainer mx-2" id="dd">
         <button className="btn btn-primary btn-sm" onClick={showHide}>
           show
         </button>

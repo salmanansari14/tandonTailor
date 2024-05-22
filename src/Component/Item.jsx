@@ -386,7 +386,7 @@ function Item() {
   ];
 
   return (
-    <>
+    <div className="home">
       <h1 className="text-center">Welcome</h1>
       <div className="select-item">
         {checkBoxArray.map((a, i) =>
@@ -485,7 +485,7 @@ function Item() {
       ) : (
         <span className="elseSpan">Click on preview to show the data</span>
       )}
-    </>
+    </div>
   );
 }
 export default Item;
