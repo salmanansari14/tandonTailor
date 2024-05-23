@@ -49,7 +49,6 @@ function DataLocal({
       return;
     }
     addNewDataInExistingItem(item, newValue, newOrderValue, newItemType);
-    // AddData(item, newValue, newOrderValue, newItemType)
     setAddToggle(!addToggle);
     setNewValue("");
     setNewOrderValue("");
@@ -118,7 +117,7 @@ function DataLocal({
     <>
       <div className="tablecontainer mx-2" id="dd">
         <button className="btn btn-primary btn-sm" onClick={showHide}>
-          show all
+          show details
         </button>
         <table
           id="my-table"
@@ -172,7 +171,7 @@ function DataLocal({
                         ) : null}
                       </div>
                     </tr>
-                    {showDetails === true && itemdetails === itemIdx ? (
+                    {(showDetails === true && itemdetails === itemIdx) || show===true ? (
                       <tr className="table-active table-bordered text-center">
                         <th>Order</th>
                         <th>Date</th>
@@ -186,7 +185,7 @@ function DataLocal({
                         <th></th>
                       </tr>
                     ) : null}
-                    {showDetails === true
+                    {showDetails === true || show===true
                       ? item.qntDetails &&
                         item.qntDetails.map((qntItem, qntIdx) => (
                           <QntDetailsInfo
