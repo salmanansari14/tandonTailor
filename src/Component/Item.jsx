@@ -17,6 +17,7 @@ function Item() {
   let total = 0,
     qntDetails = [],
     Date = new DateObject();
+    // console.log(Date.format('DD/MM/YYYY'),'LFGH')
 
   const [prod, setProd] = useState(
     localStorage.getItem("item") === null
@@ -141,7 +142,7 @@ function Item() {
     itemsDetails.qntDetails = [];
     let qntArray = {
       order: itemsDetails.order,
-      date: Date.format(),
+      date: Date.format('DD/MM/YYYY'),
       category: itemsDetails.category,
       qnt: itemsDetails.quantity,
     };
@@ -183,7 +184,7 @@ function Item() {
     qntDetails = [];
     const qntArray = {
       order: newOrderValue,
-      date: Date.format(),
+      date: Date.format('DD/MM/YYYY'),
       category: newItemType,
       qnt: newValue,
     };
@@ -229,7 +230,6 @@ function Item() {
             newItemType === newProd[i].qntDetails[qntIdx].category
               ? u
               : newItemType;
-          console.log(newValue, newOrderValue, newItemType);
           let sum = 0;
           for (let j = 0; j < prod[i].qntDetails.length; j++) {
             sum += Number(newProd[i].qntDetails[j].qnt);
@@ -263,8 +263,10 @@ function Item() {
   };
 
   const delItemQnt = (itemsIndex, indexOfqntDetails) => {
-    let DemoProd = [];
-    for (let i = 0; i < prod.length; i++) {
+    if (window.confirm(`Are you sure to delete ${prod[itemsIndex].name}'s quantity details ?`)) {
+     
+      let DemoProd = [];
+      for (let i = 0; i < prod.length; i++) {
       if (i === itemsIndex) {
         prod[i].totalPrice -=
           prod[i].qntDetails[indexOfqntDetails].qnt * prod[i].price;
@@ -274,6 +276,7 @@ function Item() {
       DemoProd[i] = prod[i];
     }
     setProd(DemoProd);
+  }
   };
   const delItem = (itemIdx) => {
     if (window.confirm(`Are you sure to delete ${prod[itemIdx].name} ?`)) {
@@ -444,8 +447,11 @@ function Item() {
                 onClick={Previe}
                 type="submit"
                 className="btn btn-sm btn-success mx-3"
-              >
-                preview
+              >{
+                showData===false?(
+                " Show"
+                ):'Hide'
+              }
               </button>
             ) : null}
           </div>
@@ -483,7 +489,7 @@ function Item() {
       ) : prod.length === 0 ? (
         <span className="elseSpan">Please add an items</span>
       ) : (
-        <span className="elseSpan">Click on preview to show the data</span>
+        <span className="elseSpan">Click on Show button to show the data</span>
       )}
     </div>
   );

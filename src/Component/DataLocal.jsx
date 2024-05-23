@@ -7,6 +7,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { Dialog } from "@mui/material";
 import QntDetailsInfo from "./QntDetailsIinfo";
 import "./style.css";
+import DateObject from "react-date-object";
 
 function DataLocal({
   prod,
@@ -112,11 +113,12 @@ function DataLocal({
   function showHide() {
     setShow(!show);
   }
+  let date = new DateObject()
   return (
     <>
       <div className="tablecontainer mx-2" id="dd">
         <button className="btn btn-primary btn-sm" onClick={showHide}>
-          show
+          show all
         </button>
         <table
           id="my-table"
@@ -258,7 +260,7 @@ function DataLocal({
                   {valueProd &&
                     valueProd.map((amount) => (
                       <tr className="table text-center table-bordered">
-                        <td>Date</td>
+                        <td>{date.format('DD/MM/YYYY')}</td>
                         <td>{amount}</td>
                         <td>
                           <RiDeleteBinLine
