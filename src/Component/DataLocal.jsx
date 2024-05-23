@@ -85,12 +85,10 @@ function DataLocal({
     }
     quntities[i] = a;
   }
-  let piece=0
+  let piece = 0;
   for (let i = 0; i < prod.length; i++) {
-    piece += quntities[i]
-    
+    piece += quntities[i];
   }
-
 
   let MilaTotal = Number();
   for (let i = 0; i < valueProd.length; i++) {
@@ -112,7 +110,7 @@ function DataLocal({
   function showHide() {
     setShow(!show);
   }
-  let date = new DateObject()
+  let date = new DateObject();
   return (
     <>
       <div className="tablecontainer mx-2" id="dd">
@@ -139,7 +137,7 @@ function DataLocal({
             {prod &&
               prod.map((item, itemIdx) => (
                 <tr className=" table-bordered table">
-                  <td className="aligner">{item.name}</td>
+                  <td className="aligner align-middle">{item.name}</td>
                   <td className="text-center ">
                     <tr style={{ display: "inline" }}>
                       <div style={{ border: "0.5px solid #d7d7d7" }}>
@@ -159,7 +157,8 @@ function DataLocal({
                             }}
                           />
                         )}
-                        {showDetails === true && itemIdx === itemdetails ? (
+                        {(showDetails === true && itemIdx === itemdetails) ||
+                        show === true ? (
                           <span className="qnticon addicon">
                             <MdAdd
                               style={{ margin: "7px 18px" }}
@@ -171,7 +170,8 @@ function DataLocal({
                         ) : null}
                       </div>
                     </tr>
-                    {(showDetails === true && itemdetails === itemIdx) || show===true ? (
+                    {(showDetails === true && itemdetails === itemIdx) ||
+                    show === true ? (
                       <tr className="table-active table-bordered text-center">
                         <th>Order</th>
                         <th>Date</th>
@@ -185,7 +185,7 @@ function DataLocal({
                         <th></th>
                       </tr>
                     ) : null}
-                    {showDetails === true || show===true
+                    {showDetails === true || show === true
                       ? item.qntDetails &&
                         item.qntDetails.map((qntItem, qntIdx) => (
                           <QntDetailsInfo
@@ -205,10 +205,12 @@ function DataLocal({
                         ))
                       : null}
                   </td>
-                  <td>{item.price}</td>
-                  <td className="text-center">{item.totalPrice}</td>
-                  <td className="text-center">
-                    <span className=" ttt">
+                  <td className="align-middle text-center">{item.price}</td>
+                  <td className="text-center align-middle">
+                    {item.totalPrice}
+                  </td>
+                  <td className="text-center align-middle">
+                    <span className="ttt">
                       <RiDeleteBinLine
                         onClick={() => {
                           delItem(itemIdx);
@@ -220,9 +222,15 @@ function DataLocal({
               ))}
             <tr>
               <td></td>
-              <td className="table-active">Total Pieces = {piece}</td>
+              <td className="table-active table-bold text-center">
+                  Total Pieces =
+                <span style={{fontWeight: 'bold'}}>
+                   {piece}
+                  </span>
+              </td>
               <td></td>
-              <td>Total={total}</td>
+              <td className="text-center">Total=
+              <span style={{fontWeight: 'bold'}}>{total}</span></td>
               <td></td>
             </tr>
             {valueProd !== 0 ? (
@@ -259,7 +267,7 @@ function DataLocal({
                   {valueProd &&
                     valueProd.map((amount) => (
                       <tr className="table text-center table-bordered">
-                        <td>{date.format('DD/MM/YYYY')}</td>
+                        <td>{date.format("DD/MM/YYYY")}</td>
                         <td>{amount}</td>
                         <td>
                           <RiDeleteBinLine
@@ -282,7 +290,7 @@ function DataLocal({
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Due={total - MilaTotal}</td>
+                <td className="text-center">Due={total - MilaTotal}</td>
                 <td></td>
               </tr>
             ) : null}
