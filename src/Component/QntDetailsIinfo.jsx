@@ -22,8 +22,9 @@ function QntDetailsInfo({
           className="text-center"
           style={{ border: "0.5px solid rgb(163, 163, 163)" }}
         >
+          <td className="">{qntItemDate}</td>
           {qntItemOrder !== "" ? <td>{qntItemOrder}</td> : <td>-</td>}
-          <td>{qntItemDate}</td>
+
           {itemName === "Suit" ||
           itemName === "Sadri" ||
           itemName === "Coat" ||
@@ -55,8 +56,8 @@ function QntDetailsInfo({
           className="text-center"
           style={{ border: "0.5px solid rgb(163, 163, 163)" }}
         >
-          {qntItemOrder !== "" ? <td>{qntItemOrder}</td> : <td>-</td>}
           <td>{qntItemDate}</td>
+          {qntItemOrder !== "" ? <td>{qntItemOrder}</td> : <td>-</td>}
           {itemName === "Suit" ||
           itemName === "Sadri" ||
           itemName === "Coat" ||

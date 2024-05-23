@@ -114,9 +114,9 @@ function DataLocal({
   return (
     <>
       <div className="tablecontainer mx-2" id="dd">
-        <button className="btn btn-primary btn-sm" onClick={showHide}>
+        {/* <button className="btn btn-primary btn-sm" onClick={showHide}>
           show details
-        </button>
+        </button> */}
         <table
           id="my-table"
           className="my-10 table table-bordered table-striped"
@@ -127,7 +127,12 @@ function DataLocal({
           >
             <tr className="table-dark">
               <th className="text-center">ITEMS</th>
-              <th className="text-center">QNT</th>
+              <th className="text-center">
+                QNT{" "}
+                <button className="btn btn-secondary btn-sm" onClick={showHide}>
+                  <IoIosArrowDown onClick={showHide} />
+                </button>
+              </th>
               <th>Rs.</th>
               <th className="text-center">TOTAL</th>
               <th></th>
@@ -173,8 +178,8 @@ function DataLocal({
                     {(showDetails === true && itemdetails === itemIdx) ||
                     show === true ? (
                       <tr className="table-active table-bordered text-center">
-                        <th>Order</th>
                         <th>Date</th>
+                        <th>Order</th>
                         {item.name === "Suit" ||
                         item.name === "Sadri" ||
                         item.name === "Coat" ||
@@ -223,14 +228,14 @@ function DataLocal({
             <tr>
               <td></td>
               <td className="table-active table-bold text-center">
-                  Total Pieces =
-                <span style={{fontWeight: 'bold'}}>
-                   {piece}
-                  </span>
+                Total Pieces =
+                <span style={{ fontWeight: "bold" }}>{piece}</span>
               </td>
               <td></td>
-              <td className="text-center">Total=
-              <span style={{fontWeight: 'bold'}}>{total}</span></td>
+              <td className="text-center">
+                Total=
+                <span style={{ fontWeight: "bold" }}>{total}</span>
+              </td>
               <td></td>
             </tr>
             {valueProd !== 0 ? (
