@@ -134,19 +134,19 @@ function DataLocal({
               <th className="text-center">ITEMS</th>
               <th className="text-center">
                 QNT
-                {showHide === true ? (
+                {show === true ? (
                   <button
                     className="btn btn-secondary btn-sm"
                     onClick={showHide}
-                  >
+                    >
                     <IoIosArrowUp onClick={showHide} />
                   </button>
                 ) : (
                   <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={showHide}
+                  className="btn btn-secondary btn-sm"
+                  onClick={showHide}
                   >
-                    <IoIosArrowDown onClick={showHide} />
+                  <IoIosArrowDown onClick={showHide} />
                   </button>
                 )}
               </th>
