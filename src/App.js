@@ -40,7 +40,7 @@ function App() {
                 </div>
               </nav>
             </div> */}
-            <h1>LFGLK</h1>
+            {/* <h1>LFGLK</h1> */}
       <Routes >
         <Route exact path='tandonTailor/' element={<Item />} />
       </Routes>
