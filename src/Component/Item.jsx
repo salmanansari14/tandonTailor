@@ -113,8 +113,10 @@ function Item() {
     },
   ]);
   function deleteAmount() {
-    localStorage.removeItem("amounts");
-    setValueProd([]);
+    if(window.confirm('Are you sure to delete Mila Amount')){
+      localStorage.removeItem("amounts");
+      setValueProd([]);
+    }
   }
   const clearDataInput = () => {
     itemsDetails.map((s, ind) => {

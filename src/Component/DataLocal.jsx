@@ -1,7 +1,12 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useState } from "react";
-import { IoIosArrowBack, IoIosArrowDown, IoMdClose } from "react-icons/io";
+import {
+  IoIosArrowBack,
+  IoIosArrowDown,
+  IoIosArrowUp,
+  IoMdClose,
+} from "react-icons/io";
 import { MdAdd } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Dialog } from "@mui/material";
@@ -128,10 +133,22 @@ function DataLocal({
             <tr className="table-dark">
               <th className="text-center">ITEMS</th>
               <th className="text-center">
-                QNT{" "}
-                <button className="btn btn-secondary btn-sm" onClick={showHide}>
-                  <IoIosArrowDown onClick={showHide} />
-                </button>
+                QNT
+                {showHide === true ? (
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={showHide}
+                  >
+                    <IoIosArrowUp onClick={showHide} />
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={showHide}
+                  >
+                    <IoIosArrowDown onClick={showHide} />
+                  </button>
+                )}
               </th>
               <th>Rs.</th>
               <th className="text-center">TOTAL</th>
@@ -150,7 +167,7 @@ function DataLocal({
                           {quntities[itemIdx]}
                         </span>
                         {showDetails === true && itemIdx === itemdetails ? (
-                          <IoIosArrowBack
+                          <IoIosArrowUp
                             onClick={() => {
                               setItemDetails("e");
                             }}
@@ -250,7 +267,7 @@ function DataLocal({
                         Mila = {MilaTotal}
                       </span>
                       {showDetails === true ? (
-                        <IoIosArrowBack
+                        <IoIosArrowUp
                           onClick={() => {
                             setShowDetails(!showDetails);
                           }}
