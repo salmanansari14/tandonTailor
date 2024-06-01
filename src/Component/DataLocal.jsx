@@ -250,7 +250,7 @@ function DataLocal({
               </td>
               <td></td>
               <td className="text-center">
-                Total=
+                Total = 
                 <span style={{ fontWeight: "bold" }}>{total}</span>
               </td>
               <td></td>
@@ -312,7 +312,7 @@ function DataLocal({
                 <td></td>
                 <td></td>
                 <td></td>
-                <td className="text-center">Due={total - MilaTotal}</td>
+                <td className="text-center">Due = {total - MilaTotal}</td>
                 <td></td>
               </tr>
             ) : null}
