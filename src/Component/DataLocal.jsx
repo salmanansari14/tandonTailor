@@ -255,7 +255,7 @@ function DataLocal({
               </td>
               <td></td>
             </tr>
-            {valueProd !== 0 ? (
+            {valueProd.length !== 0 ? (
               <tr className="text-center">
                 <td></td>
                 <td></td>
