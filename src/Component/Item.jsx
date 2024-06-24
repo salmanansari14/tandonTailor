@@ -17,7 +17,7 @@ function Item() {
   let total = 0,
     qntDetails = [],
     Date = new DateObject();
-    // console.log(Date.format('DD/MM/YYYY'),'LFGH')
+  // console.log(Date.format('DD/MM/YYYY'),'LFGH')
 
   const [prod, setProd] = useState(
     localStorage.getItem("item") === null
@@ -113,7 +113,7 @@ function Item() {
     },
   ]);
   function deleteAmount() {
-    if(window.confirm('Are you sure to delete Mila Amount')){
+    if (window.confirm("Are you sure to delete Mila Amount")) {
       localStorage.removeItem("amounts");
       setValueProd([]);
     }
@@ -144,7 +144,7 @@ function Item() {
     itemsDetails.qntDetails = [];
     let qntArray = {
       order: itemsDetails.order,
-      date: Date.format('DD/MM/YYYY'),
+      date: Date.format("DD/MM/YYYY"),
       category: itemsDetails.category,
       qnt: itemsDetails.quantity,
     };
@@ -186,7 +186,7 @@ function Item() {
     qntDetails = [];
     const qntArray = {
       order: newOrderValue,
-      date: Date.format('DD/MM/YYYY'),
+      date: Date.format("DD/MM/YYYY"),
       category: newItemType,
       qnt: newValue,
     };
@@ -265,20 +265,29 @@ function Item() {
   };
 
   const delItemQnt = (itemsIndex, indexOfqntDetails) => {
-    if (window.confirm(`Are you sure to delete ${prod[itemsIndex].name}'s quantity details ?`)) {
+    if (
+      window.confirm(
+        `Are you sure to delete ${prod[itemsIndex].name}'s quantity details ?`
+      )
+    ) {
+      if (prod[itemsIndex].qntDetails.length === 1) {
+        setProd(prod.filter((e, i) => i !== itemsIndex));
+        return;
+      }
       let DemoProd = [];
       for (let i = 0; i < prod.length; i++) {
-      if (i === itemsIndex) {
-        prod[i].totalPrice -=
-          prod[i].qntDetails[indexOfqntDetails].qnt * prod[i].price;
-        prod[i].qntDetails.splice(indexOfqntDetails, 1);
+        if (i === itemsIndex) {
+          prod[i].totalPrice -=
+            prod[i].qntDetails[indexOfqntDetails].qnt * prod[i].price;
+          prod[i].qntDetails.splice(indexOfqntDetails, 1);
+          DemoProd[i] = prod[i];
+        }
         DemoProd[i] = prod[i];
       }
-      DemoProd[i] = prod[i];
+      setProd(DemoProd);
     }
-    setProd(DemoProd);
-  }
   };
+
   const delItem = (itemIdx) => {
     if (window.confirm(`Are you sure to delete ${prod[itemIdx].name} ?`)) {
       setProd(prod.filter((e, i) => i !== itemIdx));
@@ -448,11 +457,8 @@ function Item() {
                 onClick={Previe}
                 type="submit"
                 className="btn btn-sm btn-success mx-3"
-              >{
-                showData===false?(
-                " Show"
-                ):'Hide'
-              }
+              >
+                {showData === false ? " Show" : "Hide"}
               </button>
             ) : null}
           </div>
