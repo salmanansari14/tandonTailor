@@ -75,7 +75,7 @@ function Item() {
       order: "",
       quantity: "1",
       qntDetails,
-      price: 90,
+      price: 40,
       totalPrice: 0,
     },
     {
@@ -84,7 +84,7 @@ function Item() {
       order: "",
       quantity: "1",
       qntDetails,
-      price: 30,
+      price: 40,
       totalPrice: 0,
     },
     {
@@ -266,7 +266,6 @@ function Item() {
 
   const delItemQnt = (itemsIndex, indexOfqntDetails) => {
     if (window.confirm(`Are you sure to delete ${prod[itemsIndex].name}'s quantity details ?`)) {
-     
       let DemoProd = [];
       for (let i = 0; i < prod.length; i++) {
       if (i === itemsIndex) {
