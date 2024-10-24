@@ -44,6 +44,14 @@ function Item() {
 
   const [itemsDetails, setItemDetails] = useState([
     {
+      name: "Three piece Suit",
+      order: "",
+      quantity: "1",
+      qntDetails,
+      price: 200,
+      totalPrice: 0,
+    },
+    {
       name: "Suit",
       category: "SB",
       order: "",
@@ -388,6 +396,7 @@ function Item() {
   };
   const checkBoxArray = [
     "Shirt",
+    'Three piece Suit',
     "Pant",
     "Suit",
     "Coat",
