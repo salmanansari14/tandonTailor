@@ -4,7 +4,7 @@ import DateObject from "react-date-object";
 import DataLocal from "./DataLocal";
 import InputComponent from "./InputComponent";
 
-function Item() {
+function Item2() {
   const [inputValue, setInputValue] = useState("");
   const [orderValue, setOrderValue] = useState("");
   const [categoryValue, setCategoryValue] = useState("");
@@ -20,9 +20,9 @@ function Item() {
   // console.log(Date.format('DD/MM/YYYY'),'LFGH')
 
   const [prod, setProd] = useState(
-    localStorage.getItem("item") === null
+    localStorage.getItem("item2") === null
       ? []
-      : JSON.parse(localStorage.getItem("item"))
+      : JSON.parse(localStorage.getItem("item2"))
   );
   if (prod.length !== 0) {
     for (let i = 0; i < prod.length; i++) {
@@ -39,7 +39,7 @@ function Item() {
     localStorage.setItem("amounts", JSON.stringify(valueProd));
   });
   useEffect(() => {
-    localStorage.setItem("item", JSON.stringify(prod));
+    localStorage.setItem("item2", JSON.stringify(prod));
   });
 
   const [itemsDetails, setItemDetails] = useState([
@@ -400,7 +400,7 @@ function Item() {
 
   return (
     <div className="home">
-      <h1 className="text-center">You are on sheet 1</h1>
+      <h1 className="text-center">Your are on sheet 2</h1>
       <div className="text-center">
         <h5>
           {value === ""
@@ -502,4 +502,4 @@ function Item() {
     </div>
   );
 }
-export default Item;
+export default Item2;
