@@ -400,7 +400,7 @@ function Item() {
 
   return (
     <div className="home">
-      <h1 className="text-center">You are on sheet 1</h1>
+      <h1 className="text-center">You are on Tandon Tailor</h1>
       <div className="text-center">
         <h5>
           {value === ""

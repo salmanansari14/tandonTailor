@@ -400,7 +400,7 @@ function Item2() {
 
   return (
     <div className="home">
-      <h1 className="text-center">Your are on sheet 2</h1>
+      <h1 className="text-center">Your are on Others</h1>
       <div className="text-center">
         <h5>
           {value === ""

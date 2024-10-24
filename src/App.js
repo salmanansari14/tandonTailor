@@ -9,8 +9,8 @@ function App() {
   return (
     <Router>
         <div className='nav'>
-            <li><Link className='navitem' to='tandonTailor'>Sheet 1</Link></li>
-            <li><Link className='navitem' to='irshad'>Sheet 2</Link></li>
+            <li><Link className='navitem' to='tandonTailor'>Tandon Tailor</Link></li>
+            <li><Link className='navitem' to='irshad'>Others</Link></li>
         </div>
       <Routes >
         <Route exact path='/tandonTailor' element={<Item />} />
