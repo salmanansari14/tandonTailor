@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/tandonTailor/static/css/main.190aa4de.css",
-    "main.js": "/tandonTailor/static/js/main.f2ca1dd4.js",
+    "main.css": "/tandonTailor/static/css/main.55ea9863.css",
+    "main.js": "/tandonTailor/static/js/main.30fbac1f.js",
     "static/js/239.8607f69b.chunk.js": "/tandonTailor/static/js/239.8607f69b.chunk.js",
     "static/js/213.202a76a4.chunk.js": "/tandonTailor/static/js/213.202a76a4.chunk.js",
     "static/js/732.4d320c80.chunk.js": "/tandonTailor/static/js/732.4d320c80.chunk.js",
     "static/js/453.96c0771f.chunk.js": "/tandonTailor/static/js/453.96c0771f.chunk.js",
     "index.html": "/tandonTailor/index.html",
-    "main.190aa4de.css.map": "/tandonTailor/static/css/main.190aa4de.css.map",
-    "main.f2ca1dd4.js.map": "/tandonTailor/static/js/main.f2ca1dd4.js.map",
+    "main.55ea9863.css.map": "/tandonTailor/static/css/main.55ea9863.css.map",
+    "main.30fbac1f.js.map": "/tandonTailor/static/js/main.30fbac1f.js.map",
     "239.8607f69b.chunk.js.map": "/tandonTailor/static/js/239.8607f69b.chunk.js.map",
     "213.202a76a4.chunk.js.map": "/tandonTailor/static/js/213.202a76a4.chunk.js.map",
     "732.4d320c80.chunk.js.map": "/tandonTailor/static/js/732.4d320c80.chunk.js.map",
     "453.96c0771f.chunk.js.map": "/tandonTailor/static/js/453.96c0771f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.190aa4de.css",
-    "static/js/main.f2ca1dd4.js"
+    "static/css/main.55ea9863.css",
+    "static/js/main.30fbac1f.js"
   ]
 }
