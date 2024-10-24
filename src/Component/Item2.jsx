@@ -58,7 +58,7 @@ function Item2() {
       order: "",
       quantity: "1",
       qntDetails,
-      price: 150,
+      price: 120,
       totalPrice: 0,
     },
     {
