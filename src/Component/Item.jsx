@@ -306,7 +306,7 @@ function Item() {
       alert("you have already no items in your storage");
       clearDataInput();
     } else if (window.confirm("Are you sure to delete all the items")) {
-      localStorage.clear();
+      localStorage.removeItem('item');
       setProd([]);
       clearDataInput();
       setShowData(!showData);
